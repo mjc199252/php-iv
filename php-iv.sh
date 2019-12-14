@@ -17,7 +17,7 @@ function php-iv {
 
   #将homebrew安装的php文件遍历读取
   if [[ -n $(command -v brew) ]]; then
-    export _PHP_PATH="$_PHP_VERSIONS $(echo $(find $(brew --cellar) -maxdepth 1 -type d | grep -E 'php[0-9]*$'))"
+    export _PHP_PATH="$_PHP_PATH $(echo $(find "" -maxdepth 1 -type d | grep -E 'php[0-9]*$'))"
   fi
 
   # 如果有配置其他路径 则添加进来
