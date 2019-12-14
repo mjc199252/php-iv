@@ -30,17 +30,17 @@ if [[ ! -d "/usr/local/ssl" ]];then
     fi
 fi
 
-wget "https://github.com/php/php-src/archive/php-7.1.33.tar.gz"
-tar -zxvf "php-7.1.33.tar.gz"
-cd "php-src-php-7.1.33"
+wget "https://github.com/php/php-src/archive/php-5.6.33.tar.gz"
+tar -zxvf "php-5.6.33.tar.gz"
+cd "php-src-php-5.6.33"
 
 ./buildconf --force
-./configure --prefix=$phpinstallpath/php55/5.5.38_1 \
+./configure --prefix=$phpinstallpath/php56/5.6.33_1 \
             --localstatedir=/usr/local/var \
-            --sysconfdir=$phpinstlalpathconf/php/5.5 \
-            --with-config-file-path=$phpinstlalpathconf/php/5.5 \
-            --with-config-file-scan-dir=$phpinstlalpathconf/php/5.5/conf.d \
-            --mandir=$phpinstallpath/php55/5.5.38_1/share/man \
+            --sysconfdir=$phpinstlalpathconf/php/5.6 \
+            --with-config-file-path=$phpinstlalpathconf/php/5.6 \
+            --with-config-file-scan-dir=$phpinstlalpathconf/php/5.6/conf.d \
+            --mandir=$phpinstallpath/php56/5.6.33_1/share/man \
             --enable-inline-optimization \
             --disable-debug \
             --disable-rpath \
@@ -57,7 +57,7 @@ cd "php-src-php-7.1.33"
             --with-mcrypt \
             --with-mhash \
             --enable-ftp \ \
-            --with-openssl=/usr/local/ssl \
+            --with-openssl=/usr/local/openssl/1.0.2 \
             --enable-bcmath \
             --enable-soap \
             --enable-pcntl \
@@ -71,9 +71,9 @@ cd "php-src-php-7.1.33"
 
 make && make install
 
-touch "$phpinstallpath/php71/7.1.33_1/sbin/php71-fpm" && chmod -R 755 "$phpinstallpath/php71/7.1.33_1/sbin/php71-fpm"
-cat >> "$phpinstallpath/php71/7.1.33_1/sbin/php71-fpm" <<EOF
-prefix=\${phpinstallpath}/php71/7.1.33_1
+touch "$phpinstallpath/php56/5.6.33_1/sbin/php56-fpm" && chmod -R 755 "$phpinstallpath/php56/5.6.33_1/sbin/php56-fpm"
+cat >> "$phpinstallpath/php56/5.6.33_1/sbin/php56-fpm" <<EOF
+prefix=\${phpinstallpath}/php56/5.6.33_1
 exec_prefix=\${prefix}
 php_fpm_BIN=\${exec_prefix}/sbin/php-fpm
 php_fpm_CONF=\${phpinstallpathconf}/php/7.1/php-fpm.conf

@@ -44,7 +44,7 @@ cd "php-src-php-7.2.25"
             --with-curl \
             --with-xsl=/usr \
             --with-xmlrpc \
-            --with-openssl=/usr/local/ssl \
+            --with-openssl=/usr/local/openssl/1.1.1 \
             --with-pdo-pgsql \
             --with-png-dir=/usr/local/opt/libpng \
             --with-jpeg-dir=/usr/local/opt/jpeg \

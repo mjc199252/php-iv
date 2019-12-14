@@ -54,7 +54,7 @@ case "$1" in
 
       目前支持版本: 
               PHP5.5
-              PHP5.6(正在开发)
+              PHP5.6
               PHP7.1
               PHP7.2
               PHP7.3
@@ -73,13 +73,42 @@ case "$1" in
       ;;
     install)
       case "$2" in
+        php55|PHP55|PHP5.5|php5.5)
+            cd $PHP_SWITCH_PATH
+            cd "php55"
+            source "php55.sh"
+            return 0
+            ;;
+        php56|PHP56|PHP5.6|php5.6)
+            cd $PHP_SWITCH_PATH
+            cd "php56"
+            source "php56.sh"
+            return 0
+            ;;
         php71|PHP71|PHP7.1|php7.1)
             cd $PHP_SWITCH_PATH
             cd "php71"
             source "php71.sh"
             return 0
-        ;;
-
+            ;;
+        php72|PHP72|PHP7.2|php7.2)
+            cd $PHP_SWITCH_PATH
+            cd "php72"
+            source "php72.sh"
+            return 0
+            ;;
+        php73|PHP73|PHP7.3|php7.3)
+            cd $PHP_SWITCH_PATH
+            cd "php73"
+            source "php73.sh"
+            return 0
+            ;;
+        php74|PHP74|PHP7.4|php7.4)
+            cd $PHP_SWITCH_PATH
+            cd "php74"
+            source "php74.sh"
+            return 0
+            ;;
       esac
       return 0
       ;;  

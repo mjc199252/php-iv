@@ -74,7 +74,7 @@ cd "php-src-php-7.1.33"
 			--with-pdo-odbc=unixODBC,/usr/local/opt/unixodbc \
 			--with-unixODBC=/usr/local/opt/unixodbc \
 			--with-bz2=/usr \
-			--with-openssl=/usr/local/ssl \
+			--with-openssl=/usr/local/openssl/1.1.1 \
 			--enable-fpm \
 			--with-fpm-user=_www \
 			--with-fpm-group=_www \

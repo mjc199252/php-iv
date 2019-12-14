@@ -56,7 +56,7 @@ cd "php-src-php-5.5.38"
             --with-mcrypt \
             --with-mhash \
             --enable-ftp \ \
-            --with-openssl=/usr/local/ssl \
+            --with-openssl=/usr/local/openssl/1.0.2 \
             --enable-bcmath \
             --enable-soap \
             --enable-pcntl \

@@ -43,7 +43,7 @@ cd "php-src-php-7.3.12"
             --with-curl \
             --with-xsl=/usr \
             --with-xmlrpc \
-            --with-openssl=/usr/local/ssl \
+            --with-openssl=/usr/local/openssl/1.1.1 \
             --with-pdo-pgsql \
             --with-png-dir=/usr/local/opt/libpng \
             --with-jpeg-dir=/usr/local/opt/jpeg \
@@ -74,9 +74,9 @@ cd "php-src-php-7.3.12"
 
 make && make install
 
-touch "$phpinstallpath/php72/7.2.25_1/sbin/php72-fpm" && chmod -R 755 "$phpinstallpath/php72/7.2.25_1/sbin/php72-fpm"
-cat >> "$phpinstallpath/php72/7.2.25_1/sbin/php72-fpm" <<EOF
-prefix=\${phpinstallpath}/php72/7.2.25_1
+touch "$phpinstallpath/php73/7.3.12_1/sbin/php73-fpm" && chmod -R 755 "$phpinstallpath/php73/7.3.12_1/sbin/php73-fpm"
+cat >> "$phpinstallpath/php73/7.3.12_1/sbin/php73-fpm" <<EOF
+prefix=\${phpinstallpath}/php73/7.3.12_1
 exec_prefix=\${prefix}
 php_fpm_BIN=\${exec_prefix}/sbin/php-fpm
 php_fpm_CONF=\${phpinstallpathconf}/php/7.3/php-fpm.conf
