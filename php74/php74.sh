@@ -1,7 +1,7 @@
 #!/bin/bash
 
 phpinstallpath="/usr/local/php"
-phpinstlalpathconf="$phpinstallpath/conf"
+phpinstlalpathconf="/usr/local/phpconf"
 if[[ ! -d $phpinstallpath ]];then
     mkdir $phpinstallpath
 fi
@@ -28,17 +28,17 @@ if [[ ! -d "/usr/local/ssl" ]];then
     fi
 fi
 
-wget "https://github.com/php/php-src/archive/php-7.2.25.tar.gz"
-tar -zxvf "php-7.2.25.tar.gz"
-cd "php-src-php-7.2.25"
+wget "https://github.com/php/php-src/archive/php-7.4.0.tar.gz"
+tar -zxvf "php-7.4.0.tar.gz"
+cd "php-src-php-7.4.0"
 
 ./buildconf --force
-./configure --prefix=$phpinstallpath/php72/7.2.25_1 \
+./configure --prefix=$phpinstallpath/php74/7.4.0_1 \
             --localstatedir=$phpinstallpath \
-            --sysconfdir=$phpinstlalpathconf/php/7.2 \
-            --with-config-file-path=$phpinstlalpathconf/php/7.2 \
-            --with-config-file-scan-dir=$phpinstlalpathconf/php/7.2/conf.d \
-            --mandir=$phpinstallpath/php72/7.2.25_1/share/man \
+            --sysconfdir=$phpinstlalpathconf/php/7.4 \
+            --with-config-file-path=$phpinstlalpathconf/php/7.4 \
+            --with-config-file-scan-dir=$phpinstlalpathconf/php/7.4/conf.d \
+            --mandir=$phpinstallpath/php74/7.4.0_1/share/man \
             --with-gd \
             --with-curl \
             --with-xsl=/usr \
@@ -73,9 +73,9 @@ cd "php-src-php-7.2.25"
 
 make && make install
 
-touch "$phpinstallpath/php72/7.2.25_1/sbin/php72-fpm" && chmod -R 755 "$phpinstallpath/php72/7.2.25_1/sbin/php72-fpm"
-cat >> "$phpinstallpath/php72/7.2.25_1/sbin/php72-fpm" <<EOF
-prefix=\${phpinstallpath}/php72/7.2.25_1
+touch "$phpinstallpath/php74/7.4.0_1/sbin/php74-fpm" && chmod -R 755 "$phpinstallpath/php74/7.4.0_1/sbin/php74-fpm"
+cat >> "$phpinstallpath/php74/7.4.0_1/sbin/php74-fpm" <<EOF
+prefix=\${phpinstallpath}/php74/7.4.0_1
 exec_prefix=\${prefix}
 php_fpm_BIN=\${exec_prefix}/sbin/php-fpm
 php_fpm_CONF=\${phpinstallpathconf}/php/7.2/php-fpm.conf

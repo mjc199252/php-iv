@@ -13,7 +13,7 @@ fi
 
 systemname=`uname -a`
 
-if [[ ! -d "/usr/local/opt/openssl" ]];then
+if [[ ! -d "/usr/local/ssl" ]];then
     wget "https://www.openssl.org/source/openssl-1.1.1d.tar.gz"
     tar -zxvf "openssl-1.1.1d.tar.gz"
     cd "openssl-1.1.1d"

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 phpinstallpath="/usr/local/php"
-phpinstlalpathconf="$phpinstallpath/conf"
+phpinstlalpathconf="/usr/local/phpconf"
 if[[ ! -d $phpinstallpath ]];then
     mkdir $phpinstallpath
 fi
@@ -28,17 +28,17 @@ if [[ ! -d "/usr/local/ssl" ]];then
     fi
 fi
 
-wget "https://github.com/php/php-src/archive/php-7.2.25.tar.gz"
-tar -zxvf "php-7.2.25.tar.gz"
-cd "php-src-php-7.2.25"
+wget "https://github.com/php/php-src/archive/php-7.3.12.tar.gz"
+tar -zxvf "php-7.3.12.tar.gz"
+cd "php-src-php-7.3.12"
 
 ./buildconf --force
-./configure --prefix=$phpinstallpath/php72/7.2.25_1 \
+./configure --prefix=$phpinstallpath/php73/7.3.12_1 \
             --localstatedir=$phpinstallpath \
-            --sysconfdir=$phpinstlalpathconf/php/7.2 \
-            --with-config-file-path=$phpinstlalpathconf/php/7.2 \
-            --with-config-file-scan-dir=$phpinstlalpathconf/php/7.2/conf.d \
-            --mandir=$phpinstallpath/php72/7.2.25_1/share/man \
+            --sysconfdir=$phpinstlalpathconf/php/7.3 \
+            --with-config-file-path=$phpinstlalpathconf/php/7.3 \
+            --with-config-file-scan-dir=$phpinstlalpathconf/php/7.3/conf.d \
+            --mandir=$phpinstallpath/php73/7.3.12_1/share/man \
             --with-gd \
             --with-curl \
             --with-xsl=/usr \

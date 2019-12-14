@@ -17,7 +17,7 @@ function php-iv {
 
   #将homebrew安装的php文件遍历读取
   if [[ -n $(command -v brew) ]]; then
-    export _PHP_PATH="$_PHP_PATH $(echo $(find "" -maxdepth 1 -type d | grep -E 'php[0-9]*$'))"
+    export _PHP_PATH="$_PHP_PATH $(echo $(find "/usr/local/php" -maxdepth 1 -type d | grep -E 'php[0-9]*$'))"
   fi
 
   # 如果有配置其他路径 则添加进来
@@ -45,22 +45,21 @@ case "$1" in
         php-switch 显示已经安装同时待激活的版本
 
       切换版本(例):
-        php-switch select 5          切换到PHP5.x最新一个版本
-        php-switch select 5.5        切换到PHP5.5.x最后一个版本
-        php-switch select 5.5.13     切换到PHP5.5.13
+        php-iv select 5          切换到PHP5.x最新一个版本
+        php-iv select 5.5        切换到PHP5.5.x最后一个版本
+        php-iv select 5.5.13     切换到PHP5.5.13
 
       安装版本：
-        php-switch install php7  默认安装PHP7最新一个版本
-        php-switch install php7.1  默认安装PHP7.1最新一个版本
-        php-switch install php7.1.33 安装PHP7.1.33
+        php-iv install php7.1  安装PHP7.1版本
 
       目前支持版本: 
-              PHP5.5
-              PHP5.6
+              PHP5.5(正在开发)
+              PHP5.6(正在开发)
               PHP7.1
               PHP7.2
               PHP7.3
               PHP7.4
+              PS:7.4版本只支持部分功能
 			USAGE
 
       return 0
