@@ -14,6 +14,12 @@
 #### clone
 ps:首先确认系统装有wget软件包
 
+ps:首先确认系统装有wget软件包
+
+ps:首先确认系统装有wget软件包
+
+(emmm，三遍！)
+
 首先确保本地安装好git,然后执行命令
 ```
 git clone https://github.com/mjc199252/php-iv.git
