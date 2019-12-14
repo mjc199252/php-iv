@@ -71,6 +71,7 @@ cd "php-src-php-7.4.0"
             --disable-opcache \
             --enable-zend-signals \
 
+
 make && make install
 
 touch "$phpinstallpath/php74/7.4.0_1/sbin/php74-fpm" && chmod -R 755 "$phpinstallpath/php74/7.4.0_1/sbin/php74-fpm"

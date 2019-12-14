@@ -71,6 +71,7 @@ cd "php-src-php-7.3.12"
             --disable-opcache \
             --enable-zend-signals \
 
+
 make && make install
 
 touch "$phpinstallpath/php72/7.2.25_1/sbin/php72-fpm" && chmod -R 755 "$phpinstallpath/php72/7.2.25_1/sbin/php72-fpm"

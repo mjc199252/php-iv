@@ -68,6 +68,7 @@ cd "php-src-php-5.5.38"
             --enable-zend-signals \
             --with-curl \
 
+
 make && make install
 
 touch "$phpinstallpath/php55/5.5.38_1/sbin/php55-fpm" && chmod -R 755 "$phpinstallpath/php55/5.5.38_1/sbin/php55-fpm"

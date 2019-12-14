@@ -94,6 +94,7 @@ cd "php-src-php-7.0.27"
 
 make && make install
 
+
 touch "$phpinstallpath/php70/7.0.27_1/sbin/php70-fpm" && chmod -R 755 "$phpinstallpath/php70/7.0.27_1/sbin/php70-fpm"
 cat >> "$phpinstallpath/php70/7.0.27_1/sbin/php70-fpm" <<EOF
 prefix=\${phpinstallpath}/php70/7.0.27_1

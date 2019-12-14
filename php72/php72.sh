@@ -28,6 +28,7 @@ if [[ ! -d "/usr/local/openssl/1.1.1" ]];then
     fi
 fi
 
+
 wget "https://github.com/php/php-src/archive/php-7.2.25.tar.gz"
 tar -zxvf "php-7.2.25.tar.gz"
 cd "php-src-php-7.2.25"
