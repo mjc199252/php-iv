@@ -60,7 +60,7 @@ case "$1" in
               PHP7.3
               PHP7.4
               PS:7.4版本只支持部分功能
-			USAGE
+	  USAGE
 
       return 0
       ;;
