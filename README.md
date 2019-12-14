@@ -1,17 +1,17 @@
 # php-iv
 主要是用于linux以及mac端php版本安装与切换
 
-###支持使用平台
+### 支持使用平台
 
-#####mac
+##### mac
 
-#####ubuntu
+##### ubuntu
 
-#####centos
+##### centos
 
-###安装 使用教程
+### 安装 使用教程
 
-####clone
+#### clone
 
 首先确保本地安装好git,然后执行命令
 ```
