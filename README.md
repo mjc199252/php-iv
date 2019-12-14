@@ -1,5 +1,9 @@
 # php-iv
 主要是用于linux以及mac端php版本安装与切换
+### 支持扩展
+- [ ] swoole
+- [ ] yaf
+- [ ] seaslog
 
 ### 支持使用平台
 
