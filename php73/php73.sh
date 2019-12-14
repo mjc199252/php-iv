@@ -12,17 +12,17 @@ fi
 
 systemname=`uname -a`
 
-if [[ ! -d "/usr/local/ssl" ]];then
+if [[ ! -d "/usr/local/openssl/1.1.1" ]];then
     wget "https://www.openssl.org/source/openssl-1.1.1d.tar.gz"
     tar -zxvf "openssl-1.1.1d.tar.gz"
     cd "openssl-1.1.1d"
     if[[ $systemname =~ 'Darwin' ]];then
         sudo make clean
-    	sudo ./Configure darwin64-x86_64-cc --shared \
+    	sudo ./Configure darwin64-x86_64-cc --prefix=/usr/local/openssl/1.1.1 --openssldir=/usr/local/openssl/1.1.1 --shared \
     	sudo make
     	sudo make install
     else
-        sudo ./config --prefix=/usr/local/ssl --openssldir=/usr/local/ssl \
+        sudo ./config --prefix=/usr/local/openssl/1.1.1 --openssldir=/usr/local/openssl/1.1.1 \
         sudo make
         sudo make install
     fi
@@ -34,7 +34,7 @@ cd "php-src-php-7.3.12"
 
 ./buildconf --force
 ./configure --prefix=$phpinstallpath/php73/7.3.12_1 \
-            --localstatedir=$phpinstallpath \
+            --localstatedir=/usr/local/var \
             --sysconfdir=$phpinstlalpathconf/php/7.3 \
             --with-config-file-path=$phpinstlalpathconf/php/7.3 \
             --with-config-file-scan-dir=$phpinstlalpathconf/php/7.3/conf.d \
@@ -78,7 +78,7 @@ cat >> "$phpinstallpath/php72/7.2.25_1/sbin/php72-fpm" <<EOF
 prefix=\${phpinstallpath}/php72/7.2.25_1
 exec_prefix=\${prefix}
 php_fpm_BIN=\${exec_prefix}/sbin/php-fpm
-php_fpm_CONF=\${phpinstallpathconf}/php/7.2/php-fpm.conf
+php_fpm_CONF=\${phpinstallpathconf}/php/7.3/php-fpm.conf
 php_fpm_PID=\${exec_prefix}/run/php-fpm.pid
 php_opts="--fpm-config \$php_fpm_CONF --pid \$php_fpm_PID"
 wait_for_pid () {

@@ -12,17 +12,17 @@ fi
 
 systemname=`uname -a`
 
-if [[ ! -d "/usr/local/ssl" ]];then
+if [[ ! -d "/usr/local/openssl/1.1.1" ]];then
     wget "https://www.openssl.org/source/openssl-1.1.1d.tar.gz"
     tar -zxvf "openssl-1.1.1d.tar.gz"
     cd "openssl-1.1.1d"
     if[[ $systemname =~ 'Darwin' ]];then
         sudo make clean
-    	sudo ./Configure darwin64-x86_64-cc --shared \
+    	sudo ./Configure darwin64-x86_64-cc --prefix=/usr/local/openssl/1.1.1 --openssldir=/usr/local/openssl/1.1.1 --shared \
     	sudo make
     	sudo make install
     else
-        sudo ./config --prefix=/usr/local/ssl --openssldir=/usr/local/ssl \
+        sudo ./config --prefix=/usr/local/openssl/1.1.1 --openssldir=/usr/local/openssl/1.1.1 \
         sudo make
         sudo make install
     fi
@@ -34,7 +34,7 @@ cd "php-src-php-7.0.27"
 
 ./buildconf --force
 ./configure --prefix=$phpinstallpath/php70/7.0.27_1 \
-			--localstatedir=$phpinstallpath \
+			--localstatedir=/usr/local/var \
 			--sysconfdir=$phpinstlalpathconf/php/7.0 \
 			--with-config-file-path=$phpinstlalpathconf/php/7.0 \
 			--with-config-file-scan-dir=$phpinstlalpathconf/php/7.0/conf.d \

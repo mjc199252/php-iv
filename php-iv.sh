@@ -53,7 +53,7 @@ case "$1" in
         php-iv install php7.1  安装PHP7.1版本
 
       目前支持版本: 
-              PHP5.5(正在开发)
+              PHP5.5
               PHP5.6(正在开发)
               PHP7.1
               PHP7.2
@@ -74,8 +74,8 @@ case "$1" in
     install)
       case "$2" in
         php71|PHP71|PHP7.1|php7.1)
-            cd ~
             cd $PHP_SWITCH_PATH
+            cd "php71"
             source "php71.sh"
             return 0
         ;;
