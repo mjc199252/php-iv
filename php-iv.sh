@@ -15,6 +15,8 @@ function php-iv {
   #php的安装路径
   local _PHP_PATH=""
 
+  local _EXTENSION=$3
+
   #将homebrew安装的php文件遍历读取
   if [[ -n $(command -v brew) ]]; then
     export _PHP_PATH="$_PHP_PATH $(echo $(find "/usr/local/php" -maxdepth 1 -type d | grep -E 'php[0-9]*$'))"
