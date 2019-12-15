@@ -209,3 +209,4 @@ case "\$1" in
 	;;
 esac
 EOF
+cp php.ini-development $phpinstlalpathconf/php/5.6/php.ini

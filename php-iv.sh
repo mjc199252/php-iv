@@ -3,7 +3,7 @@
 
 function php-iv {
   local PS_NAME="php-iv"
-  local PS_VERSION="0.0.1"
+  local PS_VERSION="0.0.2"
   local PROGRAM_DISPLAY_VERSION="$PS_NAME v$PS_VERSION"
   local PHP_SWITCH_PATH="$PHP_IV_PATH"
   # colors
@@ -81,14 +81,35 @@ case "$1" in
     install)
       case "$2" in
         php55|PHP55|PHP5.5|php5.5)
-            cd $PHP_SWITCH_PATH
+            cd "$PHP_SWITCH_PATH"
             cd "php55"
-            source "php55.sh"
 
-            case $_EXTENSION in
+            if[[ ! -d "/usr/local/php/php55" ]];then
+                echo "开始安装$2" >&2
+                source "php55.sh"
+            else
+                php-iv select 5.5
+            fi
+
+            case "$_EXTENSION" in
                 seaslog)
-
-                return 0
+                    source "php55-seaslog.sh"
+                    echo "请把扩展安装路径放入 /usr/local/phpconf/php/5.5/php.ini 中"
+                    return 0
+                ;;
+                swoole)
+                    source "php55-swoole.sh"
+                    echo "请把扩展安装路径放入 /usr/local/phpconf/php/5.5/php.ini 中"
+                    return 0
+                ;;
+                yaf)
+                    source "php55-yaf.sh"
+                    echo "请把扩展安装路径放入 /usr/local/phpconf/php/5.5/php.ini 中"
+                    return 0
+                ;;
+                *)
+                    echo "对不起, 没有在找到$2版本关于$3扩展安装信息" >&2
+                    return 0
                 ;;
             esac
 
@@ -97,7 +118,37 @@ case "$1" in
         php56|PHP56|PHP5.6|php5.6)
             cd $PHP_SWITCH_PATH
             cd "php56"
-            source "php56.sh"
+
+
+            if[[ ! -d "/usr/local/php/php55" ]];then
+                echo "开始安装$2" >&2
+                source "php56.sh"
+            else
+                php-iv select 5.6
+            fi
+
+            case "$_EXTENSION" in
+                seaslog)
+                    source "php56-seaslog.sh"
+                    echo "请把扩展安装路径放入 /usr/local/phpconf/php/5.6/php.ini 中"
+                    return 0
+                ;;
+                swoole)
+                    source "php56-swoole.sh"
+                    echo "请把扩展安装路径放入 /usr/local/phpconf/php/5.6/php.ini 中"
+                    return 0
+                ;;
+                yaf)
+                    source "php56-yaf.sh"
+                    echo "请把扩展安装路径放入 /usr/local/phpconf/php/5.6/php.ini 中"
+                    return 0
+                ;;
+                *)
+                    echo "对不起, 没有在找到$2版本关于$3扩展安装信息" >&2
+                    return 0
+                ;;
+            esac
+
             return 0
             ;;
         php71|PHP71|PHP7.1|php7.1)

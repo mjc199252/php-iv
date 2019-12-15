@@ -213,3 +213,4 @@ case "\$1" in
 	;;
 esac
 EOF
+cp php.ini-development $phpinstlalpathconf/php/7.2/php.ini
