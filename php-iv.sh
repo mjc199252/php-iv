@@ -38,39 +38,44 @@ function php-iv {
 
 case "$1" in
     -h|--help|h|help|-u|--usage)
-      echo $PROGRAM_DISPLAY_VERSION
-      cat <<-USAGE
+          echo $PROGRAM_DISPLAY_VERSION
+          cat <<-USAGE
 
-      相关指令信息:
-        --help | -h | h | help     显示手册帮助信息
-        --version | -v | v | version  显示脚本信息
-        php-switch 显示已经安装同时待激活的版本
+          相关指令信息:
+                --help | -h | h | help     显示手册帮助信息
+                --version | -v | v | version  显示脚本信息
+                php-iv 显示已经安装同时待激活的版本
 
-      切换版本(例):
-        php-iv select 5          切换到PHP5.x最新一个版本
-        php-iv select 5.5        切换到PHP5.5.x最后一个版本
-        php-iv select 5.5.13     切换到PHP5.5.13
+          切换版本(例):
+                php-iv select 5          切换到PHP5.x最新一个版本
+                php-iv select 5.5        切换到PHP5.5.x最后一个版本
+                php-iv select 5.5.13     切换到PHP5.5.13
 
-      安装版本：
-        php-iv install php7.1  安装PHP7.1版本
+          安装版本(例)：
+                php-iv install php7.1  安装PHP7.1版本
 
-      目前支持版本: 
-              PHP5.5
-              PHP5.6
-              PHP7.1
-              PHP7.2
-              PHP7.3
-              PHP7.4
-              PS:7.4版本只支持部分功能
-	  USAGE
+          安装版本扩展(例)：
+                php-iv install php7.1 seaslog 安装php7.1版本的seaslog
+                php-iv install php7.1 yaf     安装php7.1版本的yaf
+                php-iv install php7.1 swoole  安装php7.1版本的swoole
 
-      return 0
-      ;;
+          目前支持版本:
+                PHP5.5
+                PHP5.6
+                PHP7.1
+                PHP7.2
+                PHP7.3
+                PHP7.4
+                PS:7.4版本只支持部分功能
+
+          USAGE
+
+          return 0
+          ;;
 
     -v|--version|v|version)
 
       echo $PROGRAM_DISPLAY_VERSION
-
       return 0
       ;;
     install)
@@ -79,6 +84,14 @@ case "$1" in
             cd $PHP_SWITCH_PATH
             cd "php55"
             source "php55.sh"
+
+            case $_EXTENSION in
+                seaslog)
+
+                return 0
+                ;;
+            esac
+
             return 0
             ;;
         php56|PHP56|PHP5.6|php5.6)
@@ -109,6 +122,10 @@ case "$1" in
             cd $PHP_SWITCH_PATH
             cd "php74"
             source "php74.sh"
+            return 0
+            ;;
+        *)
+            echo "对不起, 没有在找到关于$2的相关版本安装信息" >&2
             return 0
             ;;
       esac
