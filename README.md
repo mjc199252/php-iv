@@ -34,7 +34,7 @@ pwd
 查看当前路径
 复制文件路径
 执行如下命令
-echo "export PHP_IV_PATH={刚才复制的地址}" >> ~/.bash_profile && export PHP_IV_PATH={刚才复制的地址}
+echo 'export PHP_IV_PATH="{刚才复制的地址}"' >> ~/.bash_profile && export PHP_IV_PATH={刚才复制的地址}
 ```
 而后执行
 ```
