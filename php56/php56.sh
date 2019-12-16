@@ -3,11 +3,11 @@
 phpinstallpath="/usr/local/php"
 phpinstlalpathconf="/usr/local/phpconf"
 
-if[[ ! -d $phpinstallpath ]];then
+if [[ ! -d $phpinstallpath ]]; then
     mkdir $phpinstallpath
 fi
 
-if[[ ! -d $phpinstlalpathconf ]];then
+if [[ ! -d $phpinstlalpathconf ]]; then
     mkdir $phpinstlalpathconf
 fi
 

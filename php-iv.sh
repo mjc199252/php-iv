@@ -1,9 +1,8 @@
 #!/bin/bash
 #主要用于php版本之间的切换与安装
-
 function php-iv {
   local PS_NAME="php-iv"
-  local PS_VERSION="0.0.1"
+  local PS_VERSION="0.0.2"
   local PROGRAM_DISPLAY_VERSION="$PS_NAME v$PS_VERSION"
   local PHP_SWITCH_PATH="$PHP_IV_PATH"
   # colors
@@ -37,54 +36,52 @@ function php-iv {
   _PHP_PATH=
 
 case "$1" in
-    -h|--help|h|help|-u|--usage)
+    -h|--help|h|help)
           echo $PROGRAM_DISPLAY_VERSION
-          cat <<-USAGE
+cat <<-EOF
 
-          相关指令信息:
-                --help | -h | h | help     显示手册帮助信息
-                --version | -v | v | version  显示脚本信息
-                php-iv 显示已经安装同时待激活的版本
+                    相关指令信息:
+                          --help | -h | h | help     显示手册帮助信息
+                          --version | -v | v | version  显示脚本信息
+                          php-iv 显示已经安装同时待激活的版本
 
-          切换版本(例):
-                php-iv select 5          切换到PHP5.x最新一个版本
-                php-iv select 5.5        切换到PHP5.5.x最后一个版本
-                php-iv select 5.5.13     切换到PHP5.5.13
+                    切换版本(例):
+                          php-iv select 5          切换到PHP5.x最新一个版本
+                          php-iv select 5.5        切换到PHP5.5.x最后一个版本
+                          php-iv select 5.5.13     切换到PHP5.5.13
 
-          安装版本(例)：
-                php-iv install php7.1  安装PHP7.1版本
+                    安装版本(例)：
+                          php-iv install php7.1  安装PHP7.1版本
 
-          安装版本扩展(例)：
-                php-iv install php7.1 seaslog 安装php7.1版本的seaslog
-                php-iv install php7.1 yaf     安装php7.1版本的yaf
-                php-iv install php7.1 swoole  安装php7.1版本的swoole
+                    安装版本扩展(例)：
+                          php-iv install php7.1 seaslog 安装php7.1版本的seaslog
+                          php-iv install php7.1 yaf     安装php7.1版本的yaf
+                          php-iv install php7.1 swoole  安装php7.1版本的swoole
 
-          目前支持版本:
-                PHP5.5
-                PHP5.6
-                PHP7.1
-                PHP7.2
-                PHP7.3
-                PHP7.4
-                PS:7.4版本只支持部分功能
+                    目前支持版本:
+                          PHP5.5
+                          PHP5.6
+                          PHP7.1
+                          PHP7.2
+                          PHP7.3
+                          PHP7.4
+                          PS:7.4版本只支持部分功能
 
-          USAGE
-
+EOF
           return 0
           ;;
-
     -v|--version|v|version)
-
-      echo $PROGRAM_DISPLAY_VERSION
-      return 0
-      ;;
+        echo $PROGRAM_DISPLAY_VERSION
+        return 0 
+        ;;
     install)
       case "$2" in
         php55|PHP55|PHP5.5|php5.5)
             cd "$PHP_SWITCH_PATH"
+
             cd "php55"
 
-            if[[ ! -d "/usr/local/php/php55" ]];then
+            if [[ ! -d "/usr/local/php/php55" ]]; then
                 echo "开始安装$2" >&2
                 source "php55.sh"
             else
@@ -120,7 +117,7 @@ case "$1" in
             cd "php56"
 
 
-            if[[ ! -d "/usr/local/php/php56" ]];then
+            if [[ ! -d "/usr/local/php/php56" ]]; then
                 echo "开始安装$2" >&2
                 source "php56.sh"
             else
@@ -156,7 +153,7 @@ case "$1" in
             cd "php70"
 
 
-            if[[ ! -d "/usr/local/php/php70" ]];then
+            if [[ ! -d "/usr/local/php/php70" ]]; then
                 echo "开始安装$2" >&2
                 source "php70.sh"
             else
@@ -190,7 +187,7 @@ case "$1" in
         php71|PHP71|PHP7.1|php7.1)
             cd $PHP_SWITCH_PATH
             cd "php71"
-            if[[ ! -d "/usr/local/php/php71" ]];then
+            if [[ ! -d "/usr/local/php/php71" ]]; then
                 echo "开始安装$2" >&2
                 source "php71.sh"
             else
@@ -223,7 +220,7 @@ case "$1" in
         php72|PHP72|PHP7.2|php7.2)
             cd $PHP_SWITCH_PATH
             cd "php72"
-            if[[ ! -d "/usr/local/php/php72" ]];then
+            if [[ ! -d "/usr/local/php/php72" ]]; then
                 echo "开始安装$2" >&2
                 source "php72.sh"
             else
@@ -256,41 +253,41 @@ case "$1" in
         php73|PHP73|PHP7.3|php7.3)
             cd $PHP_SWITCH_PATH
             cd "php73"
-            if[[ ! -d "/usr/local/php/php73" ]];then
+            if [[ ! -d "/usr/local/php/php73" ]]; then
                 echo "开始安装$2" >&2
                 source "php73.sh"
             else
                 php-iv select 7.3
             fi
 
-            case "$_EXTENSION" in
-                seaslog)
-                    source "php73-seaslog.sh"
-                    echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.3/php.ini 中"
-                    return 0
-                ;;
-                swoole)
-                    source "php73-swoole.sh"
-                    echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.3/php.ini 中"
-                    return 0
-                ;;
-                yaf)
-                    source "php73-yaf.sh"
-                    echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.3/php.ini 中"
-                    return 0
-                ;;
-                *)
-                    echo "对不起, 没有在找到$2版本关于$3扩展安装信息" >&2
-                    return 0
-                ;;
-            esac
+                case "$_EXTENSION" in
+                    seaslog)
+                        source "php73-seaslog.sh"
+                        echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.3/php.ini 中"
+                        return 0
+                    ;;
+                    swoole)
+                        source "php73-swoole.sh"
+                        echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.3/php.ini 中"
+                        return 0
+                    ;;
+                    yaf)
+                        source "php73-yaf.sh"
+                        echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.3/php.ini 中"
+                        return 0
+                    ;;
+                    *)
+                        echo "对不起, 没有在找到$2版本关于$3扩展安装信息" >&2
+                        return 0
+                    ;;
+                esac
             return 0
             ;;
         php74|PHP74|PHP7.4|php7.4)
             cd $PHP_SWITCH_PATH
             cd "php74"
 
-            if[[ ! -d "/usr/local/php/php73" ]];then
+            if [[ ! -d "/usr/local/php/php73" ]]; then
                 echo "开始安装$2" >&2
                 source "php73.sh"
             else
@@ -298,12 +295,12 @@ case "$1" in
                 php -v
             fi
 
-            case "$_EXTENSION" in
-                *)
-                    echo "对不起, 没有在找到$2版本关于$3扩展安装信息" >&2
-                    return 0
-                ;;
-            esac
+                case "$_EXTENSION" in
+                    *)
+                        echo "对不起, 没有在找到$2版本关于$3扩展安装信息" >&2
+                        return 0
+                    ;;
+                esac
             return 0
             ;;
         *)

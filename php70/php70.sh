@@ -2,21 +2,21 @@
 
 phpinstallpath="/usr/local/php"
 phpinstlalpathconf="/usr/local/phpconf"
-if[[ ! -d $phpinstallpath ]];then
+if [[ ! -d $phpinstallpath ]]; then
     mkdir $phpinstallpath
 fi
 
-if[[ ! -d $phpinstlalpathconf ]];then
+if [[ ! -d $phpinstlalpathconf ]]; then
     mkdir $phpinstlalpathconf
 fi
 
 systemname=`uname -a`
 
-if [[ ! -d "/usr/local/openssl/1.1.1" ]];then
+if [[ ! -d "/usr/local/openssl/1.1.1" ]]; then
     wget "https://www.openssl.org/source/openssl-1.1.1d.tar.gz"
     tar -zxvf "openssl-1.1.1d.tar.gz"
     cd "openssl-1.1.1d"
-    if[[ $systemname =~ 'Darwin' ]];then
+    if [[ $systemname =~ 'Darwin' ]]; then
         sudo make clean
     	sudo ./Configure darwin64-x86_64-cc --prefix=/usr/local/openssl/1.1.1 --openssldir=/usr/local/openssl/1.1.1 --shared \
     	sudo make
