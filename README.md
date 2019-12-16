@@ -32,7 +32,7 @@ clone下来后进入文件目录，按下如下命令
 ```
 pwd
 查看当前路径
-复制文件地址
+复制文件路径
 执行如下命令
 echo "export PHP_IV_PATH={刚才复制的地址}" >> ~/.bash_profile | export PHP_IV_PATH={刚才复制的地址}
 ```
