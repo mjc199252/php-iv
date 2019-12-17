@@ -37,4 +37,5 @@ echo 'export PHP_IV_PATH="{刚才复制的路径}"' >> ~/.bash_profile && export
 而后执行
 ```
 echo "source {刚才复制的路径}/php-iv.sh" >> ~/.bash_profile && source {刚才复制的路径}/php-iv.sh
+source ~/.bash_profile
 ```
