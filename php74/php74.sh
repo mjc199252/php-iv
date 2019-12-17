@@ -18,12 +18,17 @@ if [[ ! -d "/usr/local/openssl/1.1.1" ]]; then
     cd "openssl-1.1.1d"
     if[[ $systemname =~ 'Darwin' ]]; then
         sudo make clean
+
     	sudo ./Configure darwin64-x86_64-cc --prefix=/usr/local/openssl/1.1.1 --openssldir=/usr/local/openssl/1.1.1 --shared \
+
     	sudo make
+
     	sudo make install
     else
         sudo ./config --prefix=/usr/local/openssl/1.1.1 --openssldir=/usr/local/openssl/1.1.1 \
+
         sudo make
+        
         sudo make install
     fi
 fi
