@@ -4,7 +4,6 @@
 - [x] swoole
 - [x] yaf
 - [x] seaslog
-
 ### 支持使用平台
 
 ##### mac (已完成测试)
@@ -16,15 +15,14 @@
 ### 安装 使用教程
 
 #### clone
-ps:首先确认系统装有wget软件包
+ps:首先确认系统装有wget软件包，确保本地安装好git,然后执行命令
 
-ps:首先确认系统装有wget软件包
+ps:首先确认系统装有wget软件包，确保本地安装好git,然后执行命令
 
-ps:首先确认系统装有wget软件包
+ps:首先确认系统装有wget软件包，确保本地安装好git,然后执行命令
 
 (emmm，三遍！)
 
-首先确保本地安装好git,然后执行命令
 ```
 git clone https://github.com/mjc199252/php-iv.git
 ```
