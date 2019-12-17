@@ -75,7 +75,9 @@ cd "php-src-php-5.5.38"
             --with-curl \
 
 
-make && make install
+sudo make
+
+sudo make install
 
 touch "$phpinstallpath/php55/5.5.38_1/sbin/php55-fpm" && chmod -R 755 "$phpinstallpath/php55/5.5.38_1/sbin/php55-fpm"
 cat >> "$phpinstallpath/php55/5.5.38_1/sbin/php55-fpm" <<EOF
@@ -216,3 +218,4 @@ case "\$1" in
 esac
 EOF
 cp php.ini-development $phpinstlalpathconf/php/5.5/php.ini
+cd "$PHP_SWITCH_PATH"

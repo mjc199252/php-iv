@@ -28,7 +28,7 @@ if [[ ! -d "/usr/local/openssl/1.1.1" ]]; then
         sudo ./config --prefix=/usr/local/openssl/1.1.1 --openssldir=/usr/local/openssl/1.1.1 \
 
         sudo make
-        
+
         sudo make install
     fi
 fi
@@ -97,8 +97,10 @@ cd "php-src-php-7.0.27"
 			--disable-phpdbg \
 			--enable-zend-signals \
 
-make && make install
 
+sudo make
+
+sudo make install
 
 touch "$phpinstallpath/php70/7.0.27_1/sbin/php70-fpm" && chmod -R 755 "$phpinstallpath/php70/7.0.27_1/sbin/php70-fpm"
 cat >> "$phpinstallpath/php70/7.0.27_1/sbin/php70-fpm" <<EOF

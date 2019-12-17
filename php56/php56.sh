@@ -30,7 +30,7 @@ if [[ ! -d "/usr/local/openssl/1.0.2" ]]; then
         sudo ./config --prefix=/usr/local/openssl/1.0.2 --openssldir=/usr/local/openssl/1.0.2 \
 
         sudo make
-        
+
         sudo make install
     fi
 fi
@@ -74,7 +74,10 @@ cd "php-src-php-5.6.33"
             --enable-zend-signals \
             --with-curl \
 
-make && make install
+
+sudo make
+
+sudo make install
 
 touch "$phpinstallpath/php56/5.6.33_1/sbin/php56-fpm" && chmod -R 755 "$phpinstallpath/php56/5.6.33_1/sbin/php56-fpm"
 cat >> "$phpinstallpath/php56/5.6.33_1/sbin/php56-fpm" <<EOF
