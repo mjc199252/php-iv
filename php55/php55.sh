@@ -13,27 +13,34 @@ fi
 
 systemname=`uname -a`
 
-if [[ ! -d "/usr/local/ssl" ]];then
+if [[ ! -d "/usr/local/openssl/1.0.2" ]];then
     wget "https://www.openssl.org/source/openssl-1.0.2t.tar.gz"
     tar -zxvf "openssl-1.0.2t.tar.gz"
     cd "openssl-1.0.2t"
     if [[ $systemname =~ 'Darwin' ]]; then
         sudo make clean
+
     	sudo ./Configure darwin64-x86_64-cc --prefix=/usr/local/openssl/1.0.2 --openssldir=/usr/local/openssl/1.0.2 \
+
     	sudo make
+
     	sudo make install
     else
         sudo ./config --prefix=/usr/local/openssl/1.0.2 --openssldir=/usr/local/openssl/1.0.2 \
+
         sudo make
+
         sudo make install
     fi
 fi
+
 
 wget "https://github.com/php/php-src/archive/php-5.5.38.tar.gz"
 tar -zxvf "php-5.5.38.tar.gz"
 cd "php-src-php-5.5.38"
 
 ./buildconf --force
+
 ./configure --prefix=$phpinstallpath/php55/5.5.38_1 \
             --localstatedir=/usr/local/var \
             --sysconfdir=$phpinstlalpathconf/php/5.5 \
@@ -55,7 +62,7 @@ cd "php-src-php-5.5.38"
             --with-iconv \
             --with-mcrypt \
             --with-mhash \
-            --enable-ftp \ \
+            --enable-ftp \
             --with-openssl=/usr/local/openssl/1.0.2 \
             --enable-bcmath \
             --enable-soap \
@@ -65,7 +72,6 @@ cd "php-src-php-5.5.38"
             --enable-sysvsem \
             --enable-sysvshm \
             --enable-sockets \
-            --enable-zend-signals \
             --with-curl \
 
 

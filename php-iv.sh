@@ -104,6 +104,9 @@ EOF
                     echo "请把扩展安装路径放入 /usr/local/phpconf/php/5.5/php.ini 中"
                     return 0
                 ;;
+                "")
+                    return 0
+                ;;    
                 *)
                     echo "对不起, 没有在找到$2版本关于$3扩展安装信息" >&2
                     return 0
@@ -138,6 +141,9 @@ EOF
                 yaf)
                     source "php56-yaf.sh"
                     echo "请把扩展安装路径放入 /usr/local/phpconf/php/5.6/php.ini 中"
+                    return 0
+                ;;
+                "")
                     return 0
                 ;;
                 *)
@@ -176,6 +182,9 @@ EOF
                     echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.0/php.ini 中"
                     return 0
                 ;;
+                "")
+                    return 0
+                ;;
                 *)
                     echo "对不起, 没有在找到$2版本关于$3扩展安装信息" >&2
                     return 0
@@ -208,6 +217,9 @@ EOF
                 yaf)
                     source "php71-yaf.sh"
                     echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.1/php.ini 中"
+                    return 0
+                ;;
+                "")
                     return 0
                 ;;
                 *)
@@ -243,6 +255,9 @@ EOF
                     echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.2/php.ini 中"
                     return 0
                 ;;
+                "")
+                    return 0
+                ;;
                 *)
                     echo "对不起, 没有在找到$2版本关于$3扩展安装信息" >&2
                     return 0
@@ -276,6 +291,9 @@ EOF
                         echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.3/php.ini 中"
                         return 0
                     ;;
+                    "")
+                    return 0
+                    ;;
                     *)
                         echo "对不起, 没有在找到$2版本关于$3扩展安装信息" >&2
                         return 0
@@ -296,6 +314,9 @@ EOF
             fi
 
                 case "$_EXTENSION" in
+                    "")
+                      return 0
+                    ;;
                     *)
                         echo "对不起, 没有在找到$2版本关于$3扩展安装信息" >&2
                         return 0

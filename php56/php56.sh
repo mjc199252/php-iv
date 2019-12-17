@@ -14,18 +14,23 @@ fi
 systemname=`uname -a`
 
 
-if [[ ! -d "/usr/local/ssl" ]];then
+if [[ ! -d "/usr/local/ssl" ]]; then
     wget "https://www.openssl.org/source/openssl-1.0.2t.tar.gz"
     tar -zxvf "openssl-1.0.2t.tar.gz"
     cd "openssl-1.0.2t"
-    if[[ $systemname =~ 'Darwin' ]];then
+    if [[ $systemname =~ 'Darwin' ]]; then
         sudo make clean
+
     	sudo ./Configure darwin64-x86_64-cc --prefix=/usr/local/openssl/1.0.2 --openssldir=/usr/local/openssl/1.0.2 \
+
     	sudo make
+
     	sudo make install
     else
         sudo ./config --prefix=/usr/local/openssl/1.0.2 --openssldir=/usr/local/openssl/1.0.2 \
+
         sudo make
+        
         sudo make install
     fi
 fi
@@ -56,7 +61,7 @@ cd "php-src-php-5.6.33"
             --with-iconv \
             --with-mcrypt \
             --with-mhash \
-            --enable-ftp \ \
+            --enable-ftp \
             --with-openssl=/usr/local/openssl/1.0.2 \
             --enable-bcmath \
             --enable-soap \
