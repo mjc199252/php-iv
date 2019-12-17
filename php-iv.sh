@@ -237,6 +237,7 @@ EOF
                 source "php72.sh"
             else
                 php-iv select 7.2
+                php -v
             fi
 
             case "$_EXTENSION" in
@@ -273,6 +274,7 @@ EOF
                 source "php73.sh"
             else
                 php-iv select 7.3
+                php -v
             fi
 
                 case "$_EXTENSION" in
@@ -305,11 +307,11 @@ EOF
             cd $PHP_SWITCH_PATH
             cd "php74"
 
-            if [[ ! -d "/usr/local/php/php73" ]]; then
+            if [[ ! -d "/usr/local/php/php74" ]]; then
                 echo "开始安装$2" >&2
-                source "php73.sh"
+                source "php74.sh"
             else
-                php-iv select 7.3
+                php-iv select 7.4
                 php -v
             fi
 

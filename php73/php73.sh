@@ -2,13 +2,19 @@
 
 phpinstallpath="/usr/local/php"
 phpinstlalpathconf="/usr/local/phpconf"
+
 if [[ ! -d $phpinstallpath ]]; then
-    mkdir $phpinstallpath
+    sudo mkdir $phpinstallpath
+    
+    sudo chmod -R 777 $phpinstallpath
 fi
 
 if [[ ! -d $phpinstlalpathconf ]]; then
-    mkdir $phpinstlalpathconf
+    sudo mkdir $phpinstlalpathconf
+    
+    sudo chmod -R 777 $phpinstlalpathconf
 fi
+
 
 systemname=`uname -a`
 
@@ -18,12 +24,17 @@ if [[ ! -d "/usr/local/openssl/1.1.1" ]]; then
     cd "openssl-1.1.1d"
     if [[ $systemname =~ 'Darwin' ]]; then
         sudo make clean
+
     	sudo ./Configure darwin64-x86_64-cc --prefix=/usr/local/openssl/1.1.1 --openssldir=/usr/local/openssl/1.1.1 --shared \
+
     	sudo make
+
     	sudo make install
     else
         sudo ./config --prefix=/usr/local/openssl/1.1.1 --openssldir=/usr/local/openssl/1.1.1 \
+
         sudo make
+
         sudo make install
     fi
 fi
@@ -72,7 +83,9 @@ cd "php-src-php-7.3.12"
             --enable-zend-signals \
 
 
-make && make install
+make
+
+make install
 
 touch "$phpinstallpath/php73/7.3.12_1/sbin/php73-fpm" && chmod -R 755 "$phpinstallpath/php73/7.3.12_1/sbin/php73-fpm"
 cat >> "$phpinstallpath/php73/7.3.12_1/sbin/php73-fpm" <<EOF
@@ -214,3 +227,4 @@ case "\$1" in
 esac
 EOF
 cp php.ini-development $phpinstlalpathconf/php/7.3/php.ini
+chmod -R 755 $phpinstlalpathconf/php/7.3/php.ini

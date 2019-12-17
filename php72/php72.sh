@@ -1,14 +1,19 @@
 #!/bin/bash
 
 phpinstallpath="/usr/local/php"
-phpinstlalpathconf="$phpinstallpath/conf"
+phpinstlalpathconf="/usr/local/phpconf"
 if [[ ! -d $phpinstallpath ]]; then
-    mkdir $phpinstallpath
+    sudo mkdir $phpinstallpath
+    
+    sudo chmod -R 777 $phpinstallpath
 fi
 
 if [[ ! -d $phpinstlalpathconf ]]; then
-    mkdir $phpinstlalpathconf
+    sudo mkdir $phpinstlalpathconf
+    
+    sudo chmod -R 777 $phpinstlalpathconf
 fi
+
 
 systemname=`uname -a`
 
@@ -18,12 +23,17 @@ if [[ ! -d "/usr/local/openssl/1.1.1" ]]; then
     cd "openssl-1.1.1d"
     if [[ $systemname =~ 'Darwin' ]]; then
         sudo make clean
+
     	sudo ./Configure darwin64-x86_64-cc --prefix=/usr/local/openssl/1.1.1 --openssldir=/usr/local/openssl/1.1.1 --shared \
+
     	sudo make
+
     	sudo make install
     else
         sudo ./config --prefix=/usr/local/openssl/1.1.1 --openssldir=/usr/local/openssl/1.1.1 \
+
         sudo make
+
         sudo make install
     fi
 fi
@@ -72,7 +82,10 @@ cd "php-src-php-7.2.25"
             --disable-opcache \
             --enable-zend-signals \
 
-make && make install
+
+make
+
+make install
 
 touch "$phpinstallpath/php72/7.2.25_1/sbin/php72-fpm" && chmod -R 755 "$phpinstallpath/php72/7.2.25_1/sbin/php72-fpm"
 cat >> "$phpinstallpath/php72/7.2.25_1/sbin/php72-fpm" <<EOF

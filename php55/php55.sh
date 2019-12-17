@@ -4,12 +4,17 @@ phpinstallpath="/usr/local/php"
 phpinstlalpathconf="/usr/local/phpconf"
 
 if [[ ! -d $phpinstallpath ]]; then
-    mkdir $phpinstallpath
+    sudo mkdir $phpinstallpath
+    
+    sudo chmod -R 777 $phpinstallpath
 fi
 
 if [[ ! -d $phpinstlalpathconf ]]; then
-    mkdir $phpinstlalpathconf
+    sudo mkdir $phpinstlalpathconf
+    
+    sudo chmod -R 777 $phpinstlalpathconf
 fi
+
 
 systemname=`uname -a`
 
@@ -75,9 +80,9 @@ cd "php-src-php-5.5.38"
             --with-curl \
 
 
-sudo make
+make
 
-sudo make install
+make install
 
 touch "$phpinstallpath/php55/5.5.38_1/sbin/php55-fpm" && chmod -R 755 "$phpinstallpath/php55/5.5.38_1/sbin/php55-fpm"
 cat >> "$phpinstallpath/php55/5.5.38_1/sbin/php55-fpm" <<EOF
@@ -218,4 +223,4 @@ case "\$1" in
 esac
 EOF
 cp php.ini-development $phpinstlalpathconf/php/5.5/php.ini
-cd "$PHP_SWITCH_PATH"
+chmod -R 755 $phpinstlalpathconf/php/5.5/php.ini
