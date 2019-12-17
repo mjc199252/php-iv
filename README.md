@@ -17,7 +17,6 @@ make
 make install
 ```
 #### php7.0以上版本安装时遇到bison version error 执行
-#### php7以下版本安装时会遇到bison version error 执行
 ```
 cd ~
 wget "http://ftp.gnu.org/gnu/bison/bison-3.4.2.tar.gz" 
