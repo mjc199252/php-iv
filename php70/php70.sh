@@ -1,7 +1,10 @@
 #!/bin/bash
 
 phpinstallpath="/usr/local/php"
-phpinstlalpathconf="/usr/local/phpconf"
+phpinstallpathconf="/usr/local/phpconf"
+NOW_PATH="$PHP_IV_PATH/php70"
+
+# 创建文件安装目录
 
 if [[ ! -d $phpinstallpath ]]; then
     sudo mkdir $phpinstallpath
@@ -10,16 +13,22 @@ if [[ ! -d $phpinstallpath ]]; then
 fi
 
 if [[ ! -d $phpinstlalpathconf ]]; then
-    sudo mkdir $phpinstlalpathconf
+    sudo mkdir $phpinstallpathconf
     
-    sudo chmod -R 777 $phpinstlalpathconf
+    sudo chmod -R 777 $phpinstallpathconf
 fi
 
-
+# 获取系统名称
 systemname=`uname -a`
 
+# 判断是否下载安装openssl
+
 if [[ ! -d "/usr/local/openssl/1.1.1" ]]; then
-    wget "https://www.openssl.org/source/openssl-1.1.1d.tar.gz"
+
+	if [[ ! -f "openssl-1.1.1d.tar.gz" ]]; then
+    	wget "https://www.openssl.org/source/openssl-1.1.1d.tar.gz"
+	fi	
+
     tar -zxvf "openssl-1.1.1d.tar.gz"
     cd "openssl-1.1.1d"
     if [[ $systemname =~ 'Darwin' ]]; then
@@ -39,16 +48,23 @@ if [[ ! -d "/usr/local/openssl/1.1.1" ]]; then
     fi
 fi
 
-wget "https://github.com/php/php-src/archive/php-7.0.27.tar.gz"
+cd $NOW_PATH
+
+# 开始PHP版本的下载与安装
+if [[ ! -f "php-7.0.27.tar.gz" ]]; then 
+	wget "https://github.com/php/php-src/archive/php-7.0.27.tar.gz"
+fi	
+
 tar -zxvf "php-7.0.27.tar.gz"
+
 cd "php-src-php-7.0.27"
 
 ./buildconf --force
 ./configure --prefix=$phpinstallpath/php70/7.0.27_1 \
 			--localstatedir=/usr/local/var \
-			--sysconfdir=$phpinstlalpathconf/php/7.0 \
-			--with-config-file-path=$phpinstlalpathconf/php/7.0 \
-			--with-config-file-scan-dir=$phpinstlalpathconf/php/7.0/conf.d \
+			--sysconfdir=$phpinstallpathconf/php/7.0 \
+			--with-config-file-path=$phpinstallpathconf/php/7.0 \
+			--with-config-file-scan-dir=$phpinstallpathconf/php/7.0/conf.d \
 			--mandir=$phpinstallpath/php70/7.0.27_1/share/man \
 			--enable-bcmath \
 			--enable-calendar \
@@ -86,8 +102,8 @@ cd "php-src-php-7.0.27"
 			--with-bz2=/usr \
 			--with-openssl=/usr/local/openssl/1.1.1 \
 			--enable-fpm \
-			--with-fpm-user=_www \
-			--with-fpm-group=_www \
+			--with-fpm-user=nobody \
+			--with-fpm-group=nobody \
 			--with-curl \
 			--with-xsl=/usr \
 			--with-ldap \
@@ -108,13 +124,18 @@ make
 
 make install
 
+if [[ -f "$phpinstallpath/php70/7.0.27_1/sbin/php70-fpm" ]]; then
+	rm -rf "$phpinstallpath/php70/7.0.27_1/sbin/php70-fpm"
+fi	
+
+
 touch "$phpinstallpath/php70/7.0.27_1/sbin/php70-fpm" && chmod -R 755 "$phpinstallpath/php70/7.0.27_1/sbin/php70-fpm"
 cat >> "$phpinstallpath/php70/7.0.27_1/sbin/php70-fpm" <<EOF
-prefix=\${phpinstallpath}/php70/7.0.27_1
-exec_prefix=\${prefix}
-php_fpm_BIN=\${exec_prefix}/sbin/php-fpm
-php_fpm_CONF=\${phpinstallpathconf}/php/7.0/php-fpm.conf
-php_fpm_PID=\${exec_prefix}/run/php-fpm.pid
+prefix=$phpinstallpath/php70/7.0.27_1
+exec_prefix=\$prefix
+php_fpm_BIN=\$exec_prefix/sbin/php-fpm
+php_fpm_CONF=$phpinstallpathconf/php/7.0/php-fpm.conf
+php_fpm_PID=/usr/local/var/run/php-fpm.pid
 php_opts="--fpm-config \$php_fpm_CONF --pid \$php_fpm_PID"
 wait_for_pid () {
 	try=0
@@ -233,7 +254,6 @@ case "\$1" in
 		fi
 
 		kill -USR2 \`cat \$php_fpm_PID\`
-
 		echo " done"
 	;;
 
@@ -247,5 +267,8 @@ case "\$1" in
 	;;
 esac
 EOF
-cp php.ini-development $phpinstlalpathconf/php/7.0/php.ini
-chmod -R 755 $phpinstlalpathconf/php/7.0/php.ini
+cp php.ini-development $phpinstallpathconf/php/7.0/php.ini
+
+chmod -R 755 $phpinstallpathconf/php/7.0/php.ini
+
+cd $PHP_IV_PATH

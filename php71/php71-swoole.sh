@@ -5,3 +5,4 @@ cd swoole-4.4.12
 phpize
 ./confiure
 make && make install
+cd $PHP_IV_PATH

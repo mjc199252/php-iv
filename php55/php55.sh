@@ -1,27 +1,35 @@
 #!/bin/bash
 
 phpinstallpath="/usr/local/php"
-phpinstlalpathconf="/usr/local/phpconf"
+phpinstallpathconf="/usr/local/phpconf"
+NOW_PATH="$PHP_IV_PATH/php55"
 
+# 创建文件安装目录
 if [[ ! -d $phpinstallpath ]]; then
     sudo mkdir $phpinstallpath
     
     sudo chmod -R 777 $phpinstallpath
 fi
 
-if [[ ! -d $phpinstlalpathconf ]]; then
-    sudo mkdir $phpinstlalpathconf
+if [[ ! -d $phpinstallpathconf ]]; then
+    sudo mkdir $phpinstallpathconf
     
-    sudo chmod -R 777 $phpinstlalpathconf
+    sudo chmod -R 777 $phpinstallpathconf
 fi
 
-
+# 获取系统名称
 systemname=`uname -a`
 
-if [[ ! -d "/usr/local/openssl/1.0.2" ]];then
-    wget "https://www.openssl.org/source/openssl-1.0.2t.tar.gz"
+if [[ ! -d "/usr/local/openssl/1.0.2" ]]; then
+
+	if [[ ! -f "openssl-1.0.2t.tar.gz" ]]; then
+		wget "https://www.openssl.org/source/openssl-1.0.2t.tar.gz"
+	fi	
+
     tar -zxvf "openssl-1.0.2t.tar.gz"
+
     cd "openssl-1.0.2t"
+
     if [[ $systemname =~ 'Darwin' ]]; then
         sudo make clean
 
@@ -39,18 +47,24 @@ if [[ ! -d "/usr/local/openssl/1.0.2" ]];then
     fi
 fi
 
+cd $NOW_PATH
 
-wget "https://github.com/php/php-src/archive/php-5.5.38.tar.gz"
+
+
+if [[ ! -f "php-5.5.38.tar.gz" ]]; then 
+	wget "https://github.com/php/php-src/archive/php-5.5.38.tar.gz"
+	
+fi	
+
 tar -zxvf "php-5.5.38.tar.gz"
 cd "php-src-php-5.5.38"
-
 ./buildconf --force
 
 ./configure --prefix=$phpinstallpath/php55/5.5.38_1 \
             --localstatedir=/usr/local/var \
-            --sysconfdir=$phpinstlalpathconf/php/5.5 \
-            --with-config-file-path=$phpinstlalpathconf/php/5.5 \
-            --with-config-file-scan-dir=$phpinstlalpathconf/php/5.5/conf.d \
+            --sysconfdir=$phpinstallpathconf/php/5.5 \
+            --with-config-file-path=$phpinstallpathconf/php/5.5 \
+            --with-config-file-scan-dir=$phpinstallpathconf/php/5.5/conf.d \
             --mandir=$phpinstallpath/php55/5.5.38_1/share/man \
             --enable-inline-optimization \
             --disable-debug \
@@ -58,8 +72,8 @@ cd "php-src-php-5.5.38"
             --enable-shared \
             --enable-opcache \
             --enable-fpm \
-            --with-fpm-user=_www \
-            --with-fpm-group=_www \
+            --with-fpm-user=nobody \
+            --with-fpm-group=nobody \
             --with-mysql=mysqlnd \
             --with-mysqli=mysqlnd \
             --with-pdo-mysql=mysqlnd \
@@ -84,13 +98,19 @@ make
 
 make install
 
+
+if [[ -f "$phpinstallpath/php55/5.5.38_1/sbin/php55-fpm" ]]; then
+	rm -rf "$phpinstallpath/php55/5.5.38_1/sbin/php55-fpm"
+fi	
+
+
 touch "$phpinstallpath/php55/5.5.38_1/sbin/php55-fpm" && chmod -R 755 "$phpinstallpath/php55/5.5.38_1/sbin/php55-fpm"
 cat >> "$phpinstallpath/php55/5.5.38_1/sbin/php55-fpm" <<EOF
-prefix=\${phpinstallpath}/php55/5.5.38_1
-exec_prefix=\${prefix}
-php_fpm_BIN=\${exec_prefix}/sbin/php-fpm
-php_fpm_CONF=\${phpinstallpathconf}/php/5.5/php-fpm.conf
-php_fpm_PID=\${exec_prefix}/run/php-fpm.pid
+prefix=$phpinstallpath/php55/5.5.38_1
+exec_prefix=\$prefix
+php_fpm_BIN=\$exec_prefix/sbin/php-fpm
+php_fpm_CONF=$phpinstallpathconf/php/5.5/php-fpm.conf
+php_fpm_PID=/usr/local/var/run/php-fpm.pid
 php_opts="--fpm-config \$php_fpm_CONF --pid \$php_fpm_PID"
 wait_for_pid () {
 	try=0
@@ -222,5 +242,9 @@ case "\$1" in
 	;;
 esac
 EOF
-cp php.ini-development $phpinstlalpathconf/php/5.5/php.ini
-chmod -R 755 $phpinstlalpathconf/php/5.5/php.ini
+
+cp php.ini-development $phpinstallpathconf/php/5.5/php.ini
+
+chmod -R 755 $phpinstallpathconf/php/5.5/php.ini
+
+cd $PHP_IV_PATH

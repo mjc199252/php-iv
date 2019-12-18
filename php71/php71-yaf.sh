@@ -5,3 +5,4 @@ cd yaf-3.0.8
 phpize
 ./configure --with-php-config=/usr/local/php/php71/7.1.33_1/bin/php-config
 make && make install
+cd $PHP_IV_PATH

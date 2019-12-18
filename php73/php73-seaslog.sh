@@ -5,3 +5,4 @@ cd "SeasLog-2.0.2"
 phpize
 ./configure
 make && make install
+cd $PHP_IV_PATH
