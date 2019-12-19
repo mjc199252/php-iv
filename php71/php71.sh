@@ -134,7 +134,7 @@ cat >> "$phpinstallpath/php71/7.1.33_1/sbin/php71-fpm" <<EOF
 prefix=$phpinstallpath/php71/7.1.33_1
 exec_prefix=\$prefix
 php_fpm_BIN=\$exec_prefix/sbin/php-fpm
-php_fpm_CONF=\$phpinstallpathconf/php/7.1/php-fpm.conf
+php_fpm_CONF=$phpinstallpathconf/php/7.1/php-fpm.conf
 php_fpm_PID=/usr/local/var/run/php-fpm.pid
 php_opts="--fpm-config \$php_fpm_CONF --pid \$php_fpm_PID"
 wait_for_pid () {
@@ -272,19 +272,24 @@ cp php.ini-development $phpinstallpathconf/php/7.1/php.ini
 
 cp $phpinstallpathconf/php/7.1/php-fpm.conf.default $phpinstallpathconf/php/7.1/php-fpm.conf
 
+cp $phpinstallpathconf/php/7.1/php-fpm.d/www.conf.default $phpinstallpathconf/php/7.1/php-fpm.d/www.conf
+
+
 chmod -R 755 $phpinstallpathconf/php/7.1/php.ini
 
 chmod -R 755 $phpinstallpathconf/php/7.1/php-fpm.conf
 
+chmod -R 755 $phpinstallpathconf/php/7.1/php-fpm.d/www.conf
+
 cd $PHP_IV_PATH
 
 if [[ $systemname =~ 'Darwin' ]]; then
-    sed -i '' "149,150c\\
+    sed -i '' "23,24c\\
 	;user=nobofy\\
-	;group=nobody\\" $phpinstallpathconf/php/7.1/php-fpm.conf
+	;group=nobody\\" $phpinstallpathconf/php/7.1/php-fpm.d/www.conf
 else
-	sed -i "149,150c\;user=nobody\\
-	\;group=nobody" $phpinstallpathconf/php/7.1/php-fpm.conf
+	sed -i "23,24c\;user=nobody\\
+	\;group=nobody" $phpinstallpathconf/php/7.1/php-fpm.d/www.conf
 fi
 
 

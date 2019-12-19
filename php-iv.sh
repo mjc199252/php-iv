@@ -409,7 +409,7 @@ EOF
       return 0
       ;;  
     *)
-      php-switch --help >&2
+      php-iv --help >&2
       return 1
       ;;
   esac
