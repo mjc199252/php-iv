@@ -2,7 +2,7 @@
 #主要用于php版本之间的切换与安装
 function php-iv {
   local PS_NAME="php-iv"
-  local PS_VERSION="0.0.2"
+  local PS_VERSION="0.0.4"
   local PROGRAM_DISPLAY_VERSION="$PS_NAME v$PS_VERSION"
   local PHP_SWITCH_PATH="$PHP_IV_PATH"
   # colors
