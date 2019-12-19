@@ -29,11 +29,11 @@ make install
 
 ### 支持使用平台
 
-##### mac (已完成测试)
+- [x] mac (已完成测试)
 
-##### ubuntu (测试中)
+- [x] ubuntu (已完成测试)
 
-##### centos (测试中)
+- [x] centos (测试中)
 
 ### 安装 使用教程
 
