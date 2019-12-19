@@ -33,7 +33,7 @@ make install
 
 - [x] ubuntu (已完成测试)
 
-- [x] centos (测试中)
+- [ ] centos (测试中)
 
 ### 安装 使用教程
 
