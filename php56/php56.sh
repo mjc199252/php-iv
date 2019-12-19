@@ -246,9 +246,20 @@ EOF
 
 cp php.ini-development $phpinstallpathconf/php/5.6/php.ini
 
+cp $phpinstallpathconf/php/5.6/php-fpm.conf.default $phpinstallpathconf/php/5.6/php-fpm.conf
+
 chmod -R 755 $phpinstallpathconf/php/5.6/php.ini
+
+chmod -R 755 $phpinstallpathconf/php/5.6/php-fpm.conf
 
 cd $PHP_IV_PATH
 
-
+if [[ $systemname =~ 'Darwin' ]]; then
+    sed -i '' "149,150c\\
+	;user=nobofy\\
+	;group=nobody\\" $phpinstallpathconf/php/5.6/php-fpm.conf
+else
+	sed -i "149,150c\;user=nobody\\
+	\;group=nobody" $phpinstallpathconf/php/5.6/php-fpm.conf
+fi
 

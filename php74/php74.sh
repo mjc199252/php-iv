@@ -244,8 +244,23 @@ case "\$1" in
 	;;
 esac
 EOF
-#cp php.ini-development $phpinstlalpathconf/php/7.4/php.ini
 
-chmod -R 755 $phpinstlalpathconf/php/7.4/php.ini
+cp php.ini-development $phpinstallpathconf/php/7.4/php.ini
 
+cp $phpinstallpathconf/php/7.4/php-fpm.conf.default $phpinstallpathconf/php/7.4/php-fpm.conf
+
+chmod -R 755 $phpinstallpathconf/php/7.4/php.ini
+
+chmod -R 755 $phpinstallpathconf/php/7.4/php-fpm.conf
+
+cd $PHP_IV_PATH
+
+if [[ $systemname =~ 'Darwin' ]]; then
+    sed -i '' "149,150c\\
+	;user=nobofy\\
+	;group=nobody\\" $phpinstallpathconf/php/7.4/php-fpm.conf
+else
+	sed -i "149,150c\;user=nobody\\
+	\;group=nobody" $phpinstallpathconf/php/7.4/php-fpm.conf
+fi
 
