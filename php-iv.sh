@@ -85,6 +85,7 @@ EOF
                 echo "开始安装$2" >&2
                 source "$PHP_SWITCH_PATH/php55/php55.sh"
             else
+                echo "检测到您已经安装$2现为您切换到该版本"
                 php-iv select 5.5
             fi
 
@@ -121,6 +122,7 @@ EOF
                 echo "开始安装$2" >&2
                 source "$PHP_SWITCH_PATH/php56/php56.sh"
             else
+                echo "检测到您已经安装$2现为您切换到该版本"
                 php-iv select 5.6
             fi
 
@@ -193,6 +195,7 @@ EOF
                 echo "开始安装$2" >&2
                 source "$PHP_SWITCH_PATH/php71/php71.sh"
             else
+                echo "检测到您已经安装$2现为您切换到该版本"
                 php-iv select 7.1
             fi
 
@@ -228,6 +231,7 @@ EOF
                 echo "开始安装$2" >&2
                 source "$PHP_SWITCH_PATH/php72/php72.sh"
             else
+                echo "检测到您已经安装$2现为您切换到该版本"
                 php-iv select 7.2
             fi
 
@@ -263,6 +267,7 @@ EOF
                 echo "开始安装$2" >&2
                 source "$PHP_SWITCH_PATH/php73/php73.sh"
             else
+                echo "检测到您已经安装$2现为您切换到该版本"
                 php-iv select 7.3
             fi
 
@@ -298,6 +303,7 @@ EOF
                 echo "开始安装$2" >&2
                 source "$PHP_SWITCH_PATH/php74/php74.sh"
             else
+                echo "检测到您已经安装$2现为您切换到该版本"
                 php-iv select 7.4
             fi
 
