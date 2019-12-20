@@ -47,10 +47,13 @@ if [[ ! -d "/usr/local/openssl/1.1.1" ]]; then
 
         sudo make install
     fi
+
+    cd ../
+
+    sudo rm -rf "openssl-1.1.1d.tar.gz" "openssl-1.1.1d"
+
 fi
 
-
-cd $NOW_PATH
 
 # 开始PHP版本的下载与安装
 if [[ ! -f "php-7.3.12.tar.gz" ]]; then 
@@ -264,8 +267,9 @@ chmod -R 755 $phpinstallpathconf/php/7.3/php-fpm.conf
 
 chmod -R 755 $phpinstallpathconf/php/7.3/php-fpm.d/www.conf
 
+cd ../
 
-cd $PHP_IV_PATH
+rm -rf "php-7.3.12.tar.gz" "php-src-php-7.3.12"
 
 if [[ $systemname =~ 'Darwin' ]]; then
     sed -i '' "23,24c\\

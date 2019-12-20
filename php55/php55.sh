@@ -45,10 +45,12 @@ if [[ ! -d "/usr/local/openssl/1.0.2" ]]; then
 
         sudo make install
     fi
+
+    cd ../
+
+    sudo rm -rf "openssl-1.0.2t.tar.gz" "openssl-1.0.2t"
+
 fi
-
-cd $NOW_PATH
-
 
 
 if [[ ! -f "php-5.5.38.tar.gz" ]]; then 
@@ -57,7 +59,9 @@ if [[ ! -f "php-5.5.38.tar.gz" ]]; then
 fi	
 
 tar -zxvf "php-5.5.38.tar.gz"
+
 cd "php-src-php-5.5.38"
+
 ./buildconf --force
 
 ./configure --prefix=$phpinstallpath/php55/5.5.38_1 \
@@ -251,7 +255,9 @@ chmod -R 755 $phpinstallpathconf/php/5.5/php.ini
 
 chmod -R 755 $phpinstallpathconf/php/5.5/php-fpm.conf
 
-cd $PHP_IV_PATH
+cd ../
+
+sudo rm -rf "php-5.5.38.tar.gz" "php-src-php-5.5.38"
 
 if [[ $systemname =~ 'Darwin' ]]; then
     sed -i '' "149,150c\\

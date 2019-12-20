@@ -3,6 +3,6 @@ wget "https://pecl.php.net/get/swoole-1.7.6.tgz"
 tar -zxvf "swoole-1.7.6.tgz"
 cd swoole-1.7.6
 phpize
-./confiure
+./configure
 make && make install
-cd $PHP_IV_PATH
+cd ../

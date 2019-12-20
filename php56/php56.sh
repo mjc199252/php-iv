@@ -25,7 +25,7 @@ systemname=`uname -a`
 
 if [[ ! -d "/usr/local/openssl/1.0.2" ]]; then
 
-    if [[ ! -f "openssl-1.0.2t.tar.gz"]]; then
+    if [[ ! -f "openssl-1.0.2t.tar.gz" ]]; then
 		wget "https://www.openssl.org/source/openssl-1.0.2t.tar.gz"
 	fi	
 
@@ -48,11 +48,15 @@ if [[ ! -d "/usr/local/openssl/1.0.2" ]]; then
 
         sudo make install
     fi
+
+    cd ../
+
+    sudo rm -rf "openssl-1.0.2t.tar.gz" "openssl-1.0.2t"
+
 fi
 
-cd $NOW_PATH
 
-if[[ ! -f "php-5.6.33.tar.gz" ]]; then 
+if [[ ! -f "php-5.6.33.tar.gz" ]]; then 
 	wget "https://github.com/php/php-src/archive/php-5.6.33.tar.gz"	
 fi	
 
@@ -252,7 +256,9 @@ chmod -R 755 $phpinstallpathconf/php/5.6/php.ini
 
 chmod -R 755 $phpinstallpathconf/php/5.6/php-fpm.conf
 
-cd $PHP_IV_PATH
+cd ../
+
+sudo rm -rf "php-5.6.33.tar.gz" "php-src-php-5.6.33"
 
 if [[ $systemname =~ 'Darwin' ]]; then
     sed -i '' "149,150c\\

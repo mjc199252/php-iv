@@ -1,6 +1,7 @@
 #!/bin/bash
 #主要用于php版本之间的切换与安装
 function php-iv {
+  
   local PS_NAME="php-iv"
   local PS_VERSION="0.0.4"
   local PROGRAM_DISPLAY_VERSION="$PS_NAME v$PS_VERSION"
@@ -75,32 +76,31 @@ EOF
         return 0 
         ;;
     install)
+
+      check_syse
+
       case "$2" in
         php55|PHP55|PHP5.5|php5.5)
-            cd "$PHP_SWITCH_PATH"
-
-            cd "php55"
-
             if [[ ! -d "/usr/local/php/php55" ]]; then
                 echo "开始安装$2" >&2
-                source "php55.sh"
+                source "$PHP_SWITCH_PATH/php55/php55.sh"
             else
                 php-iv select 5.5
             fi
 
             case "$_EXTENSION" in
                 seaslog)
-                    source "php55-seaslog.sh"
+                    source "$PHP_SWITCH_PATH/php55/php55-seaslog.sh"
                     echo "请把扩展安装路径放入 /usr/local/phpconf/php/5.5/php.ini 中"
                     return 0
                 ;;
                 swoole)
-                    source "php55-swoole.sh"
+                    source "$PHP_SWITCH_PATH/php55/php55-swoole.sh"
                     echo "请把扩展安装路径放入 /usr/local/phpconf/php/5.5/php.ini 中"
                     return 0
                 ;;
                 yaf)
-                    source "php55-yaf.sh"
+                    source "$PHP_SWITCH_PATH/php55/php55-yaf.sh"
                     echo "请把扩展安装路径放入 /usr/local/phpconf/php/5.5/php.ini 中"
                     return 0
                 ;;
@@ -116,36 +116,33 @@ EOF
             return 0
             ;;
         php56|PHP56|PHP5.6|php5.6)
-            cd $PHP_SWITCH_PATH
-            cd "php56"
-
 
             if [[ ! -d "/usr/local/php/php56" ]]; then
                 echo "开始安装$2" >&2
-                source "php56.sh"
+                source "$PHP_SWITCH_PATH/php56/php56.sh"
             else
                 php-iv select 5.6
             fi
 
             case "$_EXTENSION" in
                 seaslog)
-                    source "php56-seaslog.sh"
+                    source "$PHP_SWITCH_PATH/php56/php56-seaslog.sh"
                     echo "请把扩展安装路径放入 /usr/local/phpconf/php/5.6/php.ini 中"
                     return 0
                 ;;
                 swoole)
-                    source "php56-swoole.sh"
+                    source "$PHP_SWITCH_PATH/php56/php56-swoole.sh"
                     echo "请把扩展安装路径放入 /usr/local/phpconf/php/5.6/php.ini 中"
                     return 0
                 ;;
                 yaf)
-                    source "php56-yaf.sh"
+                    source "$PHP_SWITCH_PATH/php56/php56-yaf.sh"
                     echo "请把扩展安装路径放入 /usr/local/phpconf/php/5.6/php.ini 中"
                     return 0
                 ;;
                 "")
                     return 0
-                ;;
+                ;;    
                 *)
                     echo "对不起, 没有在找到$2版本关于$3扩展安装信息" >&2
                     return 0
@@ -155,30 +152,27 @@ EOF
             return 0
             ;;
         php70|PHP70|PHP7.0|php7.0)
-            cd $PHP_SWITCH_PATH
-            cd "php70"
-
-
+      
             if [[ ! -d "/usr/local/php/php70" ]]; then
                 echo "开始安装$2" >&2
-                source "php70.sh"
+                source "$PHP_SWITCH_PATH/php70/php70.sh"
             else
-                php-iv select 7。0
+                php-iv select 7.0
             fi
 
             case "$_EXTENSION" in
                 seaslog)
-                    source "php70-seaslog.sh"
+                    source "$PHP_SWITCH_PATH/php70/php70-seaslog.sh"
                     echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.0/php.ini 中"
                     return 0
                 ;;
                 swoole)
-                    source "php70-swoole.sh"
+                    source "$PHP_SWITCH_PATH/php70/php70-swoole.sh"
                     echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.0/php.ini 中"
                     return 0
                 ;;
                 yaf)
-                    source "php70-yaf.sh"
+                    source "$PHP_SWITCH_PATH/php70/php70-yaf.sh"
                     echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.0/php.ini 中"
                     return 0
                 ;;
@@ -194,28 +188,27 @@ EOF
             return 0
             ;;
         php71|PHP71|PHP7.1|php7.1)
-            cd $PHP_SWITCH_PATH
-            cd "php71"
+            
             if [[ ! -d "/usr/local/php/php71" ]]; then
                 echo "开始安装$2" >&2
-                source "php71.sh"
+                source "$PHP_SWITCH_PATH/php71/php71.sh"
             else
                 php-iv select 7.1
             fi
 
             case "$_EXTENSION" in
                 seaslog)
-                    source "php71-seaslog.sh"
+                    source "$PHP_SWITCH_PATH/php71/php71-seaslog.sh"
                     echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.1/php.ini 中"
                     return 0
                 ;;
                 swoole)
-                    source "php71-swoole.sh"
+                    source "$PHP_SWITCH_PATH/php71/php71-swoole.sh"
                     echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.1/php.ini 中"
                     return 0
                 ;;
                 yaf)
-                    source "php71-yaf.sh"
+                    source "$PHP_SWITCH_PATH/php71/php71-yaf.sh"
                     echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.1/php.ini 中"
                     return 0
                 ;;
@@ -230,29 +223,27 @@ EOF
             return 0
             ;;
         php72|PHP72|PHP7.2|php7.2)
-            cd $PHP_SWITCH_PATH
-            cd "php72"
+      
             if [[ ! -d "/usr/local/php/php72" ]]; then
                 echo "开始安装$2" >&2
-                source "php72.sh"
+                source "$PHP_SWITCH_PATH/php72/php72.sh"
             else
                 php-iv select 7.2
-                php -v
             fi
 
             case "$_EXTENSION" in
                 seaslog)
-                    source "php72-seaslog.sh"
+                    source "$PHP_SWITCH_PATH/php72/php72-seaslog.sh"
                     echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.2/php.ini 中"
                     return 0
                 ;;
                 swoole)
-                    source "php72-swoole.sh"
+                    source "$PHP_SWITCH_PATH/php72/php72-swoole.sh"
                     echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.2/php.ini 中"
                     return 0
                 ;;
                 yaf)
-                    source "php72-yaf.sh"
+                    source "$PHP_SWITCH_PATH/php72/php72-yaf.sh"
                     echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.2/php.ini 中"
                     return 0
                 ;;
@@ -267,55 +258,55 @@ EOF
             return 0
             ;;
         php73|PHP73|PHP7.3|php7.3)
-            cd $PHP_SWITCH_PATH
-            cd "php73"
+
             if [[ ! -d "/usr/local/php/php73" ]]; then
                 echo "开始安装$2" >&2
-                source "php73.sh"
+                source "$PHP_SWITCH_PATH/php73/php73.sh"
             else
                 php-iv select 7.3
-                php -v
             fi
 
-                case "$_EXTENSION" in
-                    seaslog)
-                        source "php73-seaslog.sh"
-                        echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.3/php.ini 中"
-                        return 0
-                    ;;
-                    swoole)
-                        source "php73-swoole.sh"
-                        echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.3/php.ini 中"
-                        return 0
-                    ;;
-                    yaf)
-                        source "php73-yaf.sh"
-                        echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.3/php.ini 中"
-                        return 0
-                    ;;
-                    "")
+            case "$_EXTENSION" in
+                seaslog)
+                    source "$PHP_SWITCH_PATH/php73/php73-seaslog.sh"
+                    echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.3/php.ini 中"
                     return 0
-                    ;;
-                    *)
-                        echo "对不起, 没有在找到$2版本关于$3扩展安装信息" >&2
-                        return 0
-                    ;;
-                esac
+                ;;
+                swoole)
+                    source "$PHP_SWITCH_PATH/php73/php73-swoole.sh"
+                    echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.3/php.ini 中"
+                    return 0
+                ;;
+                yaf)
+                    source "$PHP_SWITCH_PATH/php73/php73-yaf.sh"
+                    echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.3/php.ini 中"
+                    return 0
+                ;;
+                "")
+                    return 0
+                ;;
+                *)
+                    echo "对不起, 没有在找到$2版本关于$3扩展安装信息" >&2
+                    return 0
+                ;;
+            esac
             return 0
             ;;
         php74|PHP74|PHP7.4|php7.4)
-            cd $PHP_SWITCH_PATH
-            cd "php74"
 
             if [[ ! -d "/usr/local/php/php74" ]]; then
                 echo "开始安装$2" >&2
-                source "php74.sh"
+                source "$PHP_SWITCH_PATH/php74/php74.sh"
             else
                 php-iv select 7.4
-                php -v
             fi
 
                 case "$_EXTENSION" in
+                    yaf)
+                        source "$PHP_SWITCH_PATH/php74/php74-yaf.sh"
+                        echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.4/php.ini 中"
+                        return 0
+                    ;;
                     "")
                       return 0
                     ;;
@@ -415,4 +406,24 @@ EOF
   esac
 
   hash -r
+}
+
+
+function check_syse(){
+    echo "检查环境"
+    wget -V | grep -E ' Wget '
+    if [ $? -eq  0 ]; then
+        echo  "wget:OK!"
+    else
+        echo "请安装wget"
+        exit;
+    fi
+
+    git --version
+    if [ $? -eq 0 ]; then
+        echo  "git:OK!"
+    else
+        echo "请安装git"
+        exit;
+    fi  
 }
