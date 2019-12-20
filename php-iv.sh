@@ -66,8 +66,8 @@ cat <<-EOF
               PHP7.2
               PHP7.3
               PHP7.4
-              PS:7.4版本只支持部分功能
-
+              PS:7.4
+              
 EOF
           return 0
           ;;
