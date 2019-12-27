@@ -19,6 +19,44 @@ if [[ ! -d $phpinstallpathconf ]]; then
     sudo chmod -R 777 $phpinstallpathconf
 fi
 
+
+bison --version | head -1 | awk '{print $NF}'
+
+if [ $? -eq  0 ]; then
+
+	 b_t=$(bison --version | head -1 | awk '{print $NF}')
+
+	 bison_v=${rt/./0}  
+
+	if[ bison_v -lt 20401 -o bison_v -gt 20401 ]; then
+
+		wget "http://ftp.gnu.org/gnu/bison/bison-2.4.1.tar.gz" 
+
+		tar -zxvf bison-2.4.1.tar.gz
+
+		cd bison-2.4.1
+
+		./configure && make && make install
+
+		cd ../
+
+	  	rm -rf bison-2.4.1.tar.gz bison-2.4.1
+	fi
+else
+		wget "http://ftp.gnu.org/gnu/bison/bison-2.4.1.tar.gz" 
+
+		tar -zxvf bison-2.4.1.tar.gz
+
+		cd bison-2.4.1
+
+		./configure && make && make install
+
+		cd ../
+
+	  	rm -rf bison-2.4.1.tar.gz bison-2.4.1
+fi
+
+
 # 获得系统名称
 systemname=`uname -a`
 
@@ -76,6 +114,7 @@ cd "php-src-php-5.6.33"
             --disable-rpath \
             --enable-shared \
             --enable-opcache \
+            --enable-session \
             --enable-fpm \
             --with-fpm-user=nobody \
             --with-fpm-group=nobody \
@@ -85,20 +124,36 @@ cd "php-src-php-5.6.33"
             --enable-mbstring \
             --with-iconv \
             --with-mcrypt \
+            --with-zlib-dir \
+            --with-pcre-regex \
+            --with-iconv \
+            --with-bz2 \
+            --with-sqlite3 \
+            --with-mcrypt \
             --with-mhash \
+            --with-jpeg-dir \
+            --with-png-dir \
+            --disable-debug 
+            --with-pcre-dir \
+            --with-libxml-dir \
+            --with-mhash \
+            --with-gd \
             --enable-ftp \
+            --with-xsl \
+            --enable-zip \
             --with-openssl=/usr/local/openssl/1.0.2 \
+            --enable-mysqlnd-compression-support \
+            --with-pear \
             --enable-bcmath \
             --enable-soap \
             --enable-pcntl \
             --enable-shmop \
+            --enable-json \
             --enable-sysvmsg \
             --enable-sysvsem \
             --enable-sysvshm \
             --enable-sockets \
-            --enable-zend-signals \
             --with-curl \
-
 
 make
 

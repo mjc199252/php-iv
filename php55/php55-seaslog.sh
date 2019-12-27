@@ -6,3 +6,4 @@ phpize
 ./configure
 make && make install
 cd ../
+rm -rf SeasLog-2.0.2 SeasLog-2.0.2.tgz

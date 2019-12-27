@@ -6,3 +6,4 @@ phpize
 ./configure --with-php-config=/usr/local/php/php56/5.6.33_1/bin/php-config
 make && make install
 cd ../
+rm -rf yaf-2.3.5 yaf-2.3.5.tgz

@@ -52,36 +52,34 @@ cat <<-EOF
 
 EOF
 
-
-          echo $PROGRAM_DISPLAY_VERSION
 cat <<-EOF
 
-        相关指令信息:
-              --help | -h | h | help     显示手册帮助信息
-              --version | -v | v | version  显示脚本信息
-              php-iv 显示已经安装同时待激活的版本
+  相关指令信息:
+        --help | -h | h | help     显示手册帮助信息
+        --version | -v | v | version  显示脚本信息
+        php-iv 显示已经安装同时待激活的版本
 
-        切换版本(例):
-              php-iv select 5          切换到PHP5.x最新一个版本
-              php-iv select 5.5        切换到PHP5.5.x最后一个版本
-              php-iv select 5.5.13     切换到PHP5.5.13
+  切换版本(例):
+        php-iv select 5          切换到PHP5.x最新一个版本
+        php-iv select 5.5        切换到PHP5.5.x最后一个版本
+        php-iv select 5.5.13     切换到PHP5.5.13
 
-        安装版本(例)：
-              php-iv install php7.1  安装PHP7.1版本
+  安装版本(例)：
+        php-iv install php7.1  安装PHP7.1版本
 
-        安装版本扩展(例)：
-              php-iv install php7.1 seaslog 安装php7.1版本的seaslog
-              php-iv install php7.1 yaf     安装php7.1版本的yaf
-              php-iv install php7.1 swoole  安装php7.1版本的swoole
+  安装版本扩展(例)：
+        php-iv install php7.1 seaslog 安装php7.1版本的seaslog
+        php-iv install php7.1 yaf     安装php7.1版本的yaf
+        php-iv install php7.1 swoole  安装php7.1版本的swoole
 
-        目前支持版本:
-              PHP5.5
-              PHP5.6
-              PHP7.1
-              PHP7.2
-              PHP7.3
-              PHP7.4
-              PS:7.4
+  目前支持版本:
+        PHP5.5
+        PHP5.6
+        PHP7.1
+        PHP7.2
+        PHP7.3
+        PHP7.4
+        PS:7.4
               
 EOF
           return 0
@@ -448,4 +446,85 @@ function check_syse(){
         echo "请安装git"
         exit;
     fi  
+
+    m4 --version | head -1 | awk '{print $NF}'
+    if [ $? -eq  0 ]; then
+
+       mt=$(m4 --version | head -1 | awk '{print $NF}')
+
+       m4_v=${rt/./0}  
+
+       if[ m4_v -lt 10406 ]; then
+
+          wget "http://ftp.gnu.org/gnu/m4/m4-1.4.9.tar.gz"
+
+          tar -zvxf m4-1.4.9.tar.gz
+
+          cd m4-1.4.9/
+
+          ./configure && make && make install
+
+          cd ..
+
+          rm -rf m4-1.4.9.tar.gz m4-1.4.9
+
+       else
+          echo "m4:OK!"          
+       fi
+    else
+          wget "http://ftp.gnu.org/gnu/m4/m4-1.4.9.tar.gz"
+
+          tar -zvxf m4-1.4.9.tar.gz
+
+          cd m4-1.4.9/
+
+          ./configure && make && make install
+
+          cd ..
+
+          rm -rf m4-1.4.9.tar.gz m4-1.4.9
+    fi
+
+
+
+    autoconf --version | head -1 | awk '{print $NF}'
+
+    if [ $? -eq  0 ]; then
+
+       rt=$(autoconf --version | head -1 | awk '{print $NF}')
+
+       autoconf_v=${rt/./0}  
+
+       if[ autoconf_v -lt 2069 ]; then
+
+          wget "http://ftp.gnu.org/gnu/autoconf/autoconf-2.69.tar.gz"
+
+          tar -zvxf autoconf-2.69.tar.gz
+
+          cd autoconf-2.69/
+
+          ./configure && make && make install
+
+          cd ..
+
+          rm -rf autoconf-2.69.tar.gz autoconf-2.69
+       else
+          echo "autoconf:OK!" 
+       fi
+    else
+        wget "http://ftp.gnu.org/gnu/autoconf/autoconf-2.69.tar.gz"
+
+        tar -zvxf autoconf-2.69.tar.gz
+
+        cd autoconf-2.69/
+
+        ./configure && make && make install
+
+        cd ..
+
+        rm -rf autoconf-2.69.tar.gz autoconf-2.69
+    fi
+
+
+
 }

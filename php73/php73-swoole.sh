@@ -6,3 +6,4 @@ phpize
 ./configure
 make && make install
 cd ../
+rm -rf swoole-4.4.12 swoole-4.4.12.tgz

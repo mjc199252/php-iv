@@ -19,6 +19,44 @@ if [[ ! -d $phpinstallpathconf ]]; then
     sudo chmod -R 777 $phpinstallpathconf
 fi
 
+
+if [ $? -eq  0 ]; then
+
+	 b_t=$(bison --version | head -1 | awk '{print $NF}')
+
+	 bison_v=${rt/./0}  
+
+	if[ bison_v -lt 30402 ]; then
+
+		wget "http://ftp.gnu.org/gnu/bison/bison-3.4.2.tar.gz" 
+
+		tar -zxvf bison-3.4.2.tar.gz
+
+		cd bison-3.4.2
+
+		./configure && make && make install
+
+		cd ../
+
+	  	rm -rf bison-3.4.2.tar.gz bison-3.4.2
+	fi
+else
+		wget "http://ftp.gnu.org/gnu/bison/bison-3.4.2.tar.gz" 
+		
+		tar -zxvf bison-3.4.2.tar.gz
+
+		cd bison-3.4.2
+
+		./configure && make && make install
+
+		cd ../
+
+	  	rm -rf bison-3.4.2.tar.gz bison-3.4.2
+fi
+
+
+
+
 # 获取系统名称
 systemname=`uname -a`
 
@@ -68,37 +106,59 @@ cd "php-src-php-7.4.0"
             --with-config-file-path=$phpinstallpathconf/php/7.4 \
             --with-config-file-scan-dir=$phpinstallpathconf/php/7.4/conf.d \
             --mandir=$phpinstallpath/php74/7.4.0_1/share/man \
-            --with-gd \
-            --with-curl \
-            --with-xsl=/usr \
-            --with-xmlrpc \
-            --with-openssl=/usr/local/openssl/1.1.1 \
-            --with-pdo-pgsql \
-            --with-png-dir=/usr/local/opt/libpng \
-            --with-jpeg-dir=/usr/local/opt/jpeg \
-            --with-libxml-dir=/usr/local/opt/libxml2 \
-            --with-pdo-odbc=unixODBC,/usr/local/opt/unixodbc \
-            --with-unixODBC=/usr/local/opt/unixodbc \
-            --enable-fpm \
-            --enable-ftp \
-            --enable-dba \
-            --enable-shmop \
-            --enable-soap \
-            --enable-sockets \
-            --enable-sysvmsg \
-            --enable-sysvsem \
-            --enable-sysvshm \
-            --enable-wddx \
-            --enable-zip \
-            --with-fpm-user=nobody \
-            --with-fpm-group=nobody \
-            --with-mysql-sock=/tmp/mysql.sock \
-            --with-mysqli=mysqlnd \
-            --with-pdo-mysql=mysqlnd \
-            --disable-opcache \
-            --enable-pcntl \
-            --disable-opcache \
-            --enable-zend-signals \
+            --enable-bcmath \
+			--enable-calendar \
+			--enable-dba \
+			--enable-exif \
+			--enable-ftp \
+			--enable-gd-native-ttf \
+			--enable-mbregex \
+			--enable-mbstring \
+			--enable-shmop \
+			--enable-soap \
+			--enable-sockets \
+			--enable-sysvmsg \
+			--enable-sysvsem \
+			--enable-sysvshm \
+			--enable-session \
+			--enable-wddx \
+			--enable-zip \
+			--with-freetype-dir \
+			--with-gd \
+			--with-gettext \
+			--with-zlib-dir \
+            --with-iconv \
+			--with-icu-dir \
+			--with-pcre-regex \
+			--with-pcre-dir \
+			--with-jpeg-dir \
+			--with-mhash \
+			--with-png-dir \
+			--with-xmlrpc \
+			--with-zlib \
+			--with-readline \
+			--without-gmp \
+			--without-snmp \
+			--with-libxml-dir \
+			--with-bz2 \
+			--enable-mysqlnd-compression-support \
+			--with-openssl=/usr/local/openssl/1.1.1 \
+			--enable-fpm \
+			--with-fpm-user=nobody \
+			--with-fpm-group=nobody \
+			--with-curl \
+			--with-xsl \
+			--with-ldap \
+			--with-ldap-sasl \
+			--with-mysqli=mysqlnd \
+			--with-pdo-mysql=mysqlnd \
+			--with-pdo-pgsql \
+			--disable-opcache \
+			--enable-pcntl \
+			--without-pear \
+			--enable-dtrace \
+			--disable-phpdbg \
+			--enable-zend-signals \
 
 make
 

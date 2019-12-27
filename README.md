@@ -5,27 +5,6 @@
 - [x] yaf
 - [x] seaslog
 
-### 注意事项
-#### php7以下版本安装时会遇到bison version error 执行
-```
-cd ~
-wget "http://ftp.gnu.org/gnu/bison/bison-2.4.1.tar.gz" 
-tar -zxvf bison-2.4.1.tar.gz
-cd bison-2.4.1
-./configure
-make 
-make install
-```
-#### php7.0以上版本安装时遇到bison version error 执行
-```
-cd ~
-wget "http://ftp.gnu.org/gnu/bison/bison-3.4.2.tar.gz" 
-tar -zxvf bison-3.4.2.tar.gz
-cd bison-3.4.2
-./configure
-make 
-make install
-```
 
 ### 支持使用平台
 

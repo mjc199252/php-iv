@@ -18,6 +18,44 @@ if [[ ! -d $phpinstlalpathconf ]]; then
     sudo chmod -R 777 $phpinstallpathconf
 fi
 
+bison --version | head -1 | awk '{print $NF}'
+
+if [ $? -eq  0 ]; then
+
+	 b_t=$(bison --version | head -1 | awk '{print $NF}')
+
+	 bison_v=${rt/./0}  
+
+	if[ bison_v -lt 30402 ]; then
+
+		wget "http://ftp.gnu.org/gnu/bison/bison-3.4.2.tar.gz" 
+
+		tar -zxvf bison-3.4.2.tar.gz
+
+		cd bison-3.4.2
+
+		./configure && make && make install
+
+		cd ../
+
+	  	rm -rf bison-3.4.2.tar.gz bison-3.4.2
+	fi
+else
+		wget "http://ftp.gnu.org/gnu/bison/bison-3.4.2.tar.gz" 
+		
+		tar -zxvf bison-3.4.2.tar.gz
+
+		cd bison-3.4.2
+
+		./configure && make && make install
+
+		cd ../
+
+	  	rm -rf bison-3.4.2.tar.gz bison-3.4.2
+fi
+
+
+
 # 获取系统名称
 systemname=`uname -a`
 
@@ -82,35 +120,36 @@ cd "php-src-php-7.0.27"
 			--enable-sysvmsg \
 			--enable-sysvsem \
 			--enable-sysvshm \
+			--enable-session \
 			--enable-wddx \
 			--enable-zip \
-			--with-freetype-dir=/usr/local/opt/freetype \
+			--with-freetype-dir \
 			--with-gd \
-			--with-gettext=/usr/local/opt/gettext \
-			--with-iconv-dir=/usr/local/libiconv \
-			--with-icu-dir=/usr/local/opt/icu4c \
-			--with-jpeg-dir=/usr/local/opt/jpeg \
-			--with-kerberos=/usr \
+			--with-gettext \
+			--with-zlib-dir \
+            --with-iconv \
+			--with-icu-dir \
+			--with-pcre-regex \
+			--with-pcre-dir \
+			--with-jpeg-dir \
 			--with-mhash \
-			--with-ndbm=/usr \
-			--with-png-dir=/usr/local/opt/libpng \
+			--with-png-dir \
 			--with-xmlrpc \
-			--with-zlib=/usr \
-			--with-readline=/usr/local/opt/readline \
-			--without-gmp --without-snmp \
-			--with-libxml-dir=/usr/local/opt/libxml2 \
-			--with-pdo-odbc=unixODBC,/usr/local/opt/unixodbc \
-			--with-unixODBC=/usr/local/opt/unixodbc \
-			--with-bz2=/usr \
+			--with-zlib \
+			--with-readline \
+			--without-gmp \
+			--without-snmp \
+			--with-libxml-dir \
+			--with-bz2 \
+			--enable-mysqlnd-compression-support \
 			--with-openssl=/usr/local/openssl/1.1.1 \
 			--enable-fpm \
 			--with-fpm-user=nobody \
 			--with-fpm-group=nobody \
 			--with-curl \
-			--with-xsl=/usr \
+			--with-xsl \
 			--with-ldap \
-			--with-ldap-sasl=/usr \
-			--with-mysql-sock=/tmp/mysql.sock \
+			--with-ldap-sasl \
 			--with-mysqli=mysqlnd \
 			--with-pdo-mysql=mysqlnd \
 			--with-pdo-pgsql \

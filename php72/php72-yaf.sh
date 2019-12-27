@@ -6,3 +6,4 @@ phpize
 ./configure --with-php-config=/usr/local/php/php72/7.2.25_1/bin/php-config
 make && make install
 cd ../
+rm -rf yaf-3.0.8 yaf-3.0.8.tgz
