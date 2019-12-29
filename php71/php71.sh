@@ -38,7 +38,7 @@ if [ $? -eq  0 ]; then
 
 		./configure && make && make install
 
-		cd ..
+		cd ../
 
 	  	rm -rf bison-3.4.2.tar.gz bison-3.4.2
 	fi
@@ -51,7 +51,7 @@ else
 
 		./configure && make && make install
 
-		cd ..
+		cd ../
 
 	  	rm -rf bison-3.4.2.tar.gz bison-3.4.2
 fi
