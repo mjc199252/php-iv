@@ -4,15 +4,7 @@
 - [x] swoole
 - [x] yaf
 - [x] seaslog
-
-
-### 支持使用平台
-
-- [x] mac (已完成测试)
-
-- [x] ubuntu (已完成测试)
-
-- [ ] centos (测试中)
+- [x] redis
 
 ### 安装 使用教程
 

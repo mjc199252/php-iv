@@ -118,6 +118,10 @@ EOF
                     echo "请把扩展安装路径放入 /usr/local/phpconf/php/5.5/php.ini 中"
                     return 0
                 ;;
+                redis)
+                    source "$PHP_SWITCH_PATH/php55/php55-redis.sh"
+                    echo "请把扩展安装路径放入 /usr/local/phpconf/php/5.5/php.ini 中"
+                    return 0
                 "")
                     return 0
                 ;;    
@@ -155,6 +159,10 @@ EOF
                     echo "请把扩展安装路径放入 /usr/local/phpconf/php/5.6/php.ini 中"
                     return 0
                 ;;
+                redis)
+                    source "$PHP_SWITCH_PATH/php56/php56-redis.sh"
+                    echo "请把扩展安装路径放入 /usr/local/phpconf/php/5.6/php.ini 中"
+                    return 0
                 "")
                     return 0
                 ;;    
@@ -191,6 +199,10 @@ EOF
                     echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.0/php.ini 中"
                     return 0
                 ;;
+                redis)
+                    source "$PHP_SWITCH_PATH/php70/php70-redis.sh"
+                    echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.0/php.ini 中"
+                    return 0
                 "")
                     return 0
                 ;;
@@ -228,6 +240,10 @@ EOF
                     echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.1/php.ini 中"
                     return 0
                 ;;
+                redis)
+                    source "$PHP_SWITCH_PATH/php71/php71-redis.sh"
+                    echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.1/php.ini 中"
+                    return 0
                 "")
                     return 0
                 ;;
@@ -264,6 +280,10 @@ EOF
                     echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.2/php.ini 中"
                     return 0
                 ;;
+                redis)
+                    source "$PHP_SWITCH_PATH/php72/php72-redis.sh"
+                    echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.2/php.ini 中"
+                    return 0
                 "")
                     return 0
                 ;;
@@ -300,6 +320,10 @@ EOF
                     echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.3/php.ini 中"
                     return 0
                 ;;
+                redis)
+                    source "$PHP_SWITCH_PATH/php73/php73-redis.sh"
+                    echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.3/php.ini 中"
+                    return 0
                 "")
                     return 0
                 ;;
@@ -319,13 +343,26 @@ EOF
                 echo "检测到您已经安装$2现为您切换到该版本"
                 php-iv select 7.4
             fi
-
                 case "$_EXTENSION" in
+                    seaslog)
+                        source "$PHP_SWITCH_PATH/php74/php74-seaslog.sh"
+                        echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.4/php.ini 中"
+                        return 0
+                    ;;
+                    swoole)
+                        source "$PHP_SWITCH_PATH/php74/php74-swoole.sh"
+                        echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.4/php.ini 中"
+                        return 0
+                    ;;
                     yaf)
                         source "$PHP_SWITCH_PATH/php74/php74-yaf.sh"
                         echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.4/php.ini 中"
                         return 0
                     ;;
+                    redis)
+                        source "$PHP_SWITCH_PATH/php74/php74-redis.sh"
+                        echo "请把扩展安装路径放入 /usr/local/phpconf/php/7.4/php.ini 中"
+                        return 0
                     "")
                       return 0
                     ;;
