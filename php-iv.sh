@@ -72,6 +72,9 @@ cat <<-EOF
         php-iv install php7.1 yaf     安装php7.1版本的yaf
         php-iv install php7.1 swoole  安装php7.1版本的swoole
 
+  切换后对应版本fpm操作(例):
+        php55-fpm {start|stop|force-quit|restart|reload|status|configtest}
+
   目前支持版本:
         PHP5.5
         PHP5.6
@@ -561,7 +564,4 @@ function check_syse(){
 
         rm -rf autoconf-2.69.tar.gz autoconf-2.69
     fi
-
-
-
 }
