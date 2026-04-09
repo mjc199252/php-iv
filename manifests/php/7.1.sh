@@ -1,0 +1,12 @@
+PHP_IV_SERIES="7.1"
+PHP_IV_VERSION="7.1.33"
+PHP_IV_SOURCE_ARCHIVE="php-7.1.33.tar.xz"
+PHP_IV_SOURCE_URL="https://www.php.net/distributions/php-7.1.33.tar.xz"
+PHP_IV_SOURCE_SHA256="bd7c0a9bd5433289ee01fd440af3715309faf583f75832b64fe169c100d52968"
+PHP_IV_SOURCE_DIR="php-7.1.33"
+PHP_IV_SUPPORT_TIER="legacy"
+PHP_IV_INSTALLABLE="0"
+PHP_IV_SUPPORTED_PLATFORMS="linux-x86_64 linux-arm64 macos-x86_64"
+PHP_IV_TOOLCHAIN_TOOLS=(autoconf bison re2c pkg-config)
+PHP_IV_CONFIGURE_ARGS=()
+PHP_IV_NOTES="Legacy scaffold only. Toolchain isolation is still pending."

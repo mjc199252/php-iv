@@ -1,0 +1,211 @@
+#!/usr/bin/env bash
+
+set -uo pipefail
+
+PHP_IV_CORE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null 2>&1 && pwd)"
+export PHP_IV_PATH="${PHP_IV_PATH:-$PHP_IV_CORE_DIR}"
+
+# shellcheck source=../lib/common.sh
+source "$PHP_IV_PATH/lib/common.sh"
+# shellcheck source=../lib/platform.sh
+source "$PHP_IV_PATH/lib/platform.sh"
+# shellcheck source=../lib/doctor.sh
+source "$PHP_IV_PATH/lib/doctor.sh"
+# shellcheck source=../lib/manifests.sh
+source "$PHP_IV_PATH/lib/manifests.sh"
+# shellcheck source=../lib/install.sh
+source "$PHP_IV_PATH/lib/install.sh"
+# shellcheck source=../lib/env.sh
+source "$PHP_IV_PATH/lib/env.sh"
+
+php_iv_help() {
+  cat <<EOF
+php-iv
+
+Usage:
+  php-iv help
+  php-iv version
+  php-iv list --available
+  php-iv list --installed
+  php-iv doctor [version]
+  php-iv info <version>
+  php-iv env [installed-version]
+  php-iv select <installed-version>
+  php-iv install [--dry-run] <version> [extension]
+  php-iv ext list <version>
+
+Notes:
+  - Source php-iv.bash or php-iv.zsh before using \`php-iv select\`.
+  - \`php-iv env\` prints shell exports and is intended to be eval'ed by the bootstrap.
+  - Current installs are rooted at ${PHP_IV_ROOT:-$HOME/.php-iv}.
+EOF
+}
+
+php_iv_cmd_list() {
+  local mode="${1:-}"
+
+  case "$mode" in
+    --available)
+      php_iv_list_available
+      ;;
+    --installed)
+      php_iv_list_installed
+      ;;
+    *)
+      php_iv_log error "Usage: php-iv list --available|--installed"
+      return "$PHP_IV_EXIT_USAGE"
+      ;;
+  esac
+}
+
+php_iv_cmd_doctor() {
+  local spec="${1:-}"
+  php_iv_doctor "$spec"
+}
+
+php_iv_cmd_info() {
+  local spec="${1:-}"
+
+  if [[ -z "$spec" ]]; then
+    php_iv_log error "Usage: php-iv info <version>"
+    return "$PHP_IV_EXIT_USAGE"
+  fi
+
+  php_iv_print_manifest_info "$spec"
+}
+
+php_iv_cmd_env() {
+  local spec="${1:-}"
+  php_iv_emit_env "$spec"
+}
+
+php_iv_cmd_select() {
+  local shell_managed=0
+  local spec=""
+
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --shell-managed)
+        shell_managed=1
+        ;;
+      *)
+        if [[ -z "$spec" ]]; then
+          spec="$1"
+        else
+          php_iv_log error "Usage: php-iv select <installed-version>"
+          return "$PHP_IV_EXIT_USAGE"
+        fi
+        ;;
+    esac
+    shift
+  done
+
+  if [[ -z "$spec" ]]; then
+    php_iv_log error "Usage: php-iv select <installed-version>"
+    return "$PHP_IV_EXIT_USAGE"
+  fi
+
+  if [[ "$shell_managed" -ne 1 ]]; then
+    php_iv_log error "Select must run from a shell that sourced php-iv.bash or php-iv.zsh."
+    php_iv_log error "Try: source \"$PHP_IV_PATH/php-iv.bash\"  or  source \"$PHP_IV_PATH/php-iv.zsh\""
+    return "$PHP_IV_EXIT_USAGE"
+  fi
+
+  php_iv_select_installed "$spec"
+}
+
+php_iv_cmd_install() {
+  local dry_run=0
+  local version_spec=""
+  local extension=""
+
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --dry-run)
+        dry_run=1
+        ;;
+      *)
+        if [[ -z "$version_spec" ]]; then
+          version_spec="$1"
+        elif [[ -z "$extension" ]]; then
+          extension="$1"
+        else
+          php_iv_log error "Usage: php-iv install [--dry-run] <version> [extension]"
+          return "$PHP_IV_EXIT_USAGE"
+        fi
+        ;;
+    esac
+    shift
+  done
+
+  if [[ -z "$version_spec" ]]; then
+    php_iv_log error "Usage: php-iv install [--dry-run] <version> [extension]"
+    return "$PHP_IV_EXIT_USAGE"
+  fi
+
+  php_iv_install "$version_spec" "$extension" "$dry_run"
+}
+
+php_iv_cmd_ext() {
+  local subcommand="${1:-}"
+  local spec="${2:-}"
+
+  case "$subcommand" in
+    list)
+      if [[ -z "$spec" ]]; then
+        php_iv_log error "Usage: php-iv ext list <version>"
+        return "$PHP_IV_EXIT_USAGE"
+      fi
+      php_iv_list_extensions "$spec"
+      ;;
+    *)
+      php_iv_log error "Usage: php-iv ext list <version>"
+      return "$PHP_IV_EXIT_USAGE"
+      ;;
+  esac
+}
+
+php_iv_main() {
+  php_iv_init_layout
+  php_iv_detect_platform
+
+  local command="${1:-help}"
+  shift || true
+
+  case "$command" in
+    help|-h|--help)
+      php_iv_help
+      ;;
+    version|-v|--version)
+      printf 'php-iv %s\n' "$PHP_IV_TOOL_VERSION"
+      ;;
+    list)
+      php_iv_cmd_list "$@"
+      ;;
+    doctor)
+      php_iv_cmd_doctor "$@"
+      ;;
+    info)
+      php_iv_cmd_info "$@"
+      ;;
+    env)
+      php_iv_cmd_env "$@"
+      ;;
+    select)
+      php_iv_cmd_select "$@"
+      ;;
+    install)
+      php_iv_cmd_install "$@"
+      ;;
+    ext)
+      php_iv_cmd_ext "$@"
+      ;;
+    *)
+      php_iv_log error "Unknown command: $command"
+      php_iv_help >&2
+      return "$PHP_IV_EXIT_USAGE"
+      ;;
+  esac
+}
+
+php_iv_main "$@"
