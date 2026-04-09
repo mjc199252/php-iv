@@ -18,9 +18,9 @@ Phase 1 已实现：
 - 用户级安装目录，默认 `~/.php-iv`
 - `install` / `select` / `list` / `doctor` / `info` / `env` / `ext list`
 - `7.4` 与 `8.x` 的现代安装清单
-- `5.5` 到 `7.3` 的 legacy manifest scaffolding
+- `5.5` 到 `7.3` 的 legacy 自动安装支持
 
-Legacy 版本目前会被识别和展示，但自动安装尚未启用。这样可以保留旧命令入口，同时把后续兼容工作隔离到 manifest 和 toolchain 层。
+Legacy 版本现在已经接入自动安装流程，但会通过独立 toolchain 组件处理旧版 OpenSSL / Autoconf / Bison。`macos-arm64` 上的 `5.5` 到 `7.3` 仍会明确标记为 experimental。
 
 ## 目录布局
 
@@ -132,7 +132,7 @@ php-iv select 8
 - `seaslog`
 - `swoole`
 
-不同扩展是否可用于某个 PHP 版本，由 manifest 兼容矩阵决定。`php-iv ext list <version>` 可以直接查看。
+不同扩展是否可用于某个 PHP 版本，由 manifest 兼容矩阵决定。`php-iv ext list <version>` 可以直接查看；legacy PHP 会自动选择较旧的 PECL 版本。
 
 ## 依赖
 
@@ -145,6 +145,14 @@ php-iv select 8
 - `pkg-config`
 - `curl` 或 `wget`
 - OpenSSL / libxml / sqlite / zlib 等开发头文件
+
+legacy PHP 在首次安装时还可能自动拉起这些用户级 toolchain：
+
+- `openssl-1.0.2u`
+- `openssl-1.1.1w`
+- `autoconf-2.69`
+- `bison-2.7.1`
+- `bison-3.8.2`
 
 macOS 通常使用 Homebrew，Linux 通常使用 `apt` 或 `dnf`。
 

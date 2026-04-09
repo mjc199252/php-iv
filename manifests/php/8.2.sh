@@ -7,7 +7,7 @@ PHP_IV_SOURCE_DIR="php-8.2.30"
 PHP_IV_SUPPORT_TIER="current"
 PHP_IV_INSTALLABLE="1"
 PHP_IV_SUPPORTED_PLATFORMS="linux-x86_64 linux-arm64 macos-x86_64 macos-arm64"
-PHP_IV_TOOLCHAIN_TOOLS=(autoconf pkg-config)
+PHP_IV_TOOLCHAIN_TOOLS=(pkg-config autoconf)
 PHP_IV_CONFIGURE_ARGS=(
   --enable-cli
   --enable-fpm

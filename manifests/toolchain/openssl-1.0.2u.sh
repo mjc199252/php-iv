@@ -1,0 +1,8 @@
+PHP_IV_TC_COMPONENT="openssl-1.0.2u"
+PHP_IV_TC_KIND="openssl"
+PHP_IV_TC_NAME="openssl"
+PHP_IV_TC_VERSION="1.0.2u"
+PHP_IV_TC_ARCHIVE="openssl-1.0.2u.tar.gz"
+PHP_IV_TC_URL="https://www.openssl.org/source/old/1.0.2/openssl-1.0.2u.tar.gz"
+PHP_IV_TC_SOURCE_DIR="openssl-1.0.2u"
+PHP_IV_TC_NOTES="Legacy OpenSSL toolchain for PHP 5.x."

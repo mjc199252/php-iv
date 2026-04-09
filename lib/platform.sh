@@ -109,4 +109,16 @@ php_iv_prepare_build_environment() {
       export PKG_CONFIG_PATH="$(IFS=:; printf '%s' "${pkg_entries[*]}")"
     fi
   fi
+
+  if [[ -n "${PHP_IV_APPEND_CPPFLAGS:-}" ]]; then
+    export CPPFLAGS="${PHP_IV_APPEND_CPPFLAGS}${CPPFLAGS:+ $CPPFLAGS}"
+  fi
+
+  if [[ -n "${PHP_IV_APPEND_CFLAGS:-}" ]]; then
+    export CFLAGS="${PHP_IV_APPEND_CFLAGS}${CFLAGS:+ $CFLAGS}"
+  fi
+
+  if [[ -n "${PHP_IV_APPEND_LDFLAGS:-}" ]]; then
+    export LDFLAGS="${PHP_IV_APPEND_LDFLAGS}${LDFLAGS:+ $LDFLAGS}"
+  fi
 }

@@ -48,6 +48,7 @@ php_iv_init_layout() {
   export PHP_IV_LOG_DIR="$PHP_IV_ROOT/logs"
   export PHP_IV_TMP_DIR="$PHP_IV_ROOT/tmp"
   export PHP_IV_SRC_DIR="$PHP_IV_ROOT/src"
+  export PHP_IV_TOOLCHAINS_DIR="$PHP_IV_ROOT/toolchains"
   export PHP_IV_CURRENT_LINK="$PHP_IV_ROOT/current"
 
   mkdir -p \
@@ -57,7 +58,8 @@ php_iv_init_layout() {
     "$PHP_IV_ETC_DIR" \
     "$PHP_IV_LOG_DIR" \
     "$PHP_IV_TMP_DIR" \
-    "$PHP_IV_SRC_DIR"
+    "$PHP_IV_SRC_DIR" \
+    "$PHP_IV_TOOLCHAINS_DIR"
 }
 
 php_iv_default_make_jobs() {

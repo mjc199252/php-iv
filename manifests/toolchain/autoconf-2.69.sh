@@ -1,0 +1,8 @@
+PHP_IV_TC_COMPONENT="autoconf-2.69"
+PHP_IV_TC_KIND="autoconf"
+PHP_IV_TC_NAME="autoconf"
+PHP_IV_TC_VERSION="2.69"
+PHP_IV_TC_ARCHIVE="autoconf-2.69.tar.xz"
+PHP_IV_TC_URL="https://ftp.gnu.org/gnu/autoconf/autoconf-2.69.tar.xz"
+PHP_IV_TC_SOURCE_DIR="autoconf-2.69"
+PHP_IV_TC_NOTES="Legacy phpize compatibility toolchain."

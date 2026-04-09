@@ -3,8 +3,10 @@
 php_iv_reset_php_manifest() {
   unset PHP_IV_SERIES PHP_IV_VERSION PHP_IV_SOURCE_ARCHIVE PHP_IV_SOURCE_URL PHP_IV_SOURCE_SHA256
   unset PHP_IV_SUPPORT_TIER PHP_IV_INSTALLABLE PHP_IV_SUPPORTED_PLATFORMS PHP_IV_NOTES PHP_IV_SOURCE_DIR
+  unset PHP_IV_EXPERIMENTAL_PLATFORMS PHP_IV_OPENSSL_COMPONENT PHP_IV_APPEND_CFLAGS PHP_IV_APPEND_CPPFLAGS PHP_IV_APPEND_LDFLAGS
   PHP_IV_CONFIGURE_ARGS=()
   PHP_IV_TOOLCHAIN_TOOLS=()
+  PHP_IV_TOOLCHAIN_COMPONENTS=()
 }
 
 php_iv_load_php_manifest() {
@@ -193,7 +195,13 @@ php_iv_print_manifest_info() {
   printf 'tier: %s\n' "$PHP_IV_SUPPORT_TIER"
   printf 'installable: %s\n' "$PHP_IV_INSTALLABLE"
   printf 'platforms: %s\n' "$PHP_IV_SUPPORTED_PLATFORMS"
+  if [[ -n "${PHP_IV_EXPERIMENTAL_PLATFORMS:-}" ]]; then
+    printf 'experimental-platforms: %s\n' "$PHP_IV_EXPERIMENTAL_PLATFORMS"
+  fi
   printf 'source: %s\n' "$PHP_IV_SOURCE_URL"
+  if [[ ${#PHP_IV_TOOLCHAIN_COMPONENTS[@]} -gt 0 ]]; then
+    printf 'toolchains: %s\n' "${PHP_IV_TOOLCHAIN_COMPONENTS[*]}"
+  fi
   if [[ -n "${PHP_IV_SOURCE_SHA256:-}" ]]; then
     printf 'sha256: %s\n' "$PHP_IV_SOURCE_SHA256"
   fi

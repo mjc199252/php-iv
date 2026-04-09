@@ -15,11 +15,7 @@ php_iv_install() {
   php_iv_load_php_manifest "$manifest_file"
 
   if [[ "$PHP_IV_INSTALLABLE" != "1" ]]; then
-    if ! php_iv_platform_supported "$PHP_IV_SUPPORTED_PLATFORMS" && [[ "$PHP_IV_HOST_PLATFORM" == "macos-arm64" && "$PHP_IV_SUPPORT_TIER" == "legacy" ]]; then
-      php_iv_log error "PHP $PHP_IV_SERIES is recognized as ${PHP_IV_SUPPORT_TIER}. Automated install is not enabled in this phase, and macos-arm64 support remains experimental."
-    else
-      php_iv_log error "PHP $PHP_IV_SERIES is recognized as ${PHP_IV_SUPPORT_TIER}, but automated install is not enabled in this phase."
-    fi
+    php_iv_log error "PHP $PHP_IV_SERIES is recognized as ${PHP_IV_SUPPORT_TIER}, but automated install is not enabled in this phase."
     return "$PHP_IV_EXIT_VERSION_UNSUPPORTED"
   fi
 
@@ -30,11 +26,26 @@ php_iv_install() {
 
   install_dir="$PHP_IV_VERSIONS_DIR/$PHP_IV_VERSION"
 
+  if php_iv_platform_is_experimental; then
+    php_iv_log warn "PHP $PHP_IV_VERSION on $PHP_IV_HOST_PLATFORM is experimental support."
+  fi
+
   php_iv_doctor "$PHP_IV_SERIES" || return $?
 
   if [[ "$dry_run" == "1" ]]; then
     printf 'dry-run: install PHP %s from %s\n' "$PHP_IV_VERSION" "$PHP_IV_SOURCE_URL"
     printf 'root: %s\n' "$install_dir"
+    if [[ ${#PHP_IV_TOOLCHAIN_COMPONENTS[@]} -gt 0 ]]; then
+      printf 'toolchains:'
+      local component
+      for component in "${PHP_IV_TOOLCHAIN_COMPONENTS[@]}"; do
+        printf ' %s' "$component"
+      done
+      printf '\n'
+    fi
+    if php_iv_platform_is_experimental; then
+      printf 'experimental-platform: %s\n' "$PHP_IV_HOST_PLATFORM"
+    fi
     if [[ -n "$extension" ]]; then
       php_iv_validate_extension "$extension" "$PHP_IV_VERSION" "$PHP_IV_SERIES" "$PHP_IV_SUPPORT_TIER"
     fi
@@ -64,6 +75,7 @@ php_iv_install_php_from_manifest() {
   local fpm_user fpm_group
   local status
   local configure_args=()
+  local openssl_prefix=""
 
   php_iv_log info "Downloading PHP $PHP_IV_VERSION"
   if [[ ! -f "$source_archive" ]]; then
@@ -87,6 +99,15 @@ php_iv_install_php_from_manifest() {
   source_dir="$build_dir/$PHP_IV_SOURCE_DIR"
   mkdir -p "$install_dir" "$conf_dir/conf.d"
 
+  php_iv_ensure_toolchains || {
+    php_iv_cleanup_dir "$build_dir"
+    return $?
+  }
+
+  if [[ -n "${PHP_IV_OPENSSL_COMPONENT:-}" ]] && ! php_iv_toolchain_satisfies_system "$PHP_IV_OPENSSL_COMPONENT"; then
+    openssl_prefix="$(php_iv_toolchain_component_prefix "$PHP_IV_OPENSSL_COMPONENT")"
+  fi
+
   fpm_user="$(id -un)"
   fpm_group="$(id -gn)"
   configure_args=(
@@ -99,11 +120,18 @@ php_iv_install_php_from_manifest() {
     "${PHP_IV_CONFIGURE_ARGS[@]}"
   )
 
+  if [[ -n "$openssl_prefix" ]]; then
+    configure_args+=("--with-openssl=$openssl_prefix")
+  fi
+
   php_iv_log info "Building PHP $PHP_IV_VERSION (log: $log_file)"
 
   (
     set -e
     php_iv_prepare_build_environment
+    if [[ -n "$openssl_prefix" ]]; then
+      export PKG_CONFIG_PATH="$openssl_prefix/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
+    fi
     cd "$source_dir"
     ./configure "${configure_args[@]}"
     make -j "$PHP_IV_MAKE_JOBS"
@@ -113,7 +141,11 @@ php_iv_install_php_from_manifest() {
 
   if (( status != 0 )); then
     php_iv_cleanup_dir "$build_dir"
-    php_iv_log error "Build failed for PHP $PHP_IV_VERSION. See $log_file"
+    if php_iv_platform_is_experimental; then
+      php_iv_log error "Build failed for experimental PHP $PHP_IV_VERSION on $PHP_IV_HOST_PLATFORM. See $log_file"
+    else
+      php_iv_log error "Build failed for PHP $PHP_IV_VERSION. See $log_file"
+    fi
     return "$PHP_IV_EXIT_BUILD_FAILED"
   fi
 
@@ -219,6 +251,7 @@ php_iv_install_extension() {
 
   (
     set -e
+    php_iv_ensure_toolchains
     php_iv_prepare_build_environment
     cd "$source_dir"
     "$phpize"
@@ -230,7 +263,11 @@ php_iv_install_extension() {
 
   if (( status != 0 )); then
     php_iv_cleanup_dir "$build_dir"
-    php_iv_log error "Build failed for extension $extension. See $log_file"
+    if php_iv_platform_is_experimental; then
+      php_iv_log error "Build failed for extension $extension on experimental platform $PHP_IV_HOST_PLATFORM. See $log_file"
+    else
+      php_iv_log error "Build failed for extension $extension. See $log_file"
+    fi
     return "$PHP_IV_EXIT_BUILD_FAILED"
   fi
 
@@ -247,6 +284,10 @@ php_iv_install_extension() {
   php_iv_cleanup_dir "$build_dir"
   php_iv_log info "Installed extension $extension"
   return 0
+}
+
+php_iv_platform_is_experimental() {
+  [[ -n "${PHP_IV_EXPERIMENTAL_PLATFORMS:-}" ]] && [[ " $PHP_IV_EXPERIMENTAL_PLATFORMS " == *" $PHP_IV_HOST_PLATFORM "* ]]
 }
 
 php_iv_select_installed() {

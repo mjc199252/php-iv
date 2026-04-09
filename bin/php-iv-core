@@ -13,6 +13,8 @@ source "$PHP_IV_PATH/lib/platform.sh"
 source "$PHP_IV_PATH/lib/doctor.sh"
 # shellcheck source=../lib/manifests.sh
 source "$PHP_IV_PATH/lib/manifests.sh"
+# shellcheck source=../lib/toolchain.sh
+source "$PHP_IV_PATH/lib/toolchain.sh"
 # shellcheck source=../lib/install.sh
 source "$PHP_IV_PATH/lib/install.sh"
 # shellcheck source=../lib/env.sh

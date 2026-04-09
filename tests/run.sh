@@ -53,7 +53,13 @@ assert_contains "$ext_84" "swoole 6.1.6"
 
 ext_74="$("$REPO_ROOT/bin/php-iv-core" ext list 7.4)"
 assert_contains "$ext_74" "redis 6.3.0"
-assert_not_contains "$ext_74" "swoole 6.1.6"
+assert_contains "$ext_74" "swoole 4.4.26"
+
+ext_56="$("$REPO_ROOT/bin/php-iv-core" ext list 5.6)"
+assert_contains "$ext_56" "yaf 2.3.5"
+assert_contains "$ext_56" "redis 4.3.0"
+assert_contains "$ext_56" "seaslog 1.10.2"
+assert_not_contains "$ext_56" "swoole"
 
 mkdir -p \
   "$PHP_IV_ROOT/versions/8.4.19/bin" \
@@ -86,18 +92,13 @@ dry_run="$("$REPO_ROOT/bin/php-iv-core" install --dry-run 8.4 redis)"
 assert_contains "$dry_run" "dry-run: install PHP 8.4.19"
 assert_contains "$dry_run" "extension: redis 6.3.0"
 
-set +e
-legacy_output="$("$REPO_ROOT/bin/php-iv-core" install --dry-run 7.1 2>&1)"
-legacy_status=$?
-set -e
-if [[ "$legacy_status" -eq 0 ]]; then
-  printf 'assertion failed: legacy install should not be enabled yet\n' >&2
-  exit 1
-fi
-assert_contains "$legacy_output" "Automated install is not enabled"
+legacy_dry_run="$("$REPO_ROOT/bin/php-iv-core" install --dry-run 7.1 redis)"
+assert_contains "$legacy_dry_run" "dry-run: install PHP 7.1.33"
+assert_contains "$legacy_dry_run" "toolchains: openssl-1.1.1w autoconf-2.69 bison-3.8.2"
+assert_contains "$legacy_dry_run" "extension: redis 5.3.7"
 
 set +e
-doctor_output="$("$REPO_ROOT/bin/php-iv-core" doctor 8.4 2>&1)"
+doctor_output="$("$REPO_ROOT/bin/php-iv-core" doctor 7.1 2>&1)"
 doctor_status=$?
 set -e
 if [[ "$doctor_status" -ne 0 && "$doctor_status" -ne 10 ]]; then
@@ -105,6 +106,7 @@ if [[ "$doctor_status" -ne 0 && "$doctor_status" -ne 10 ]]; then
   exit 1
 fi
 assert_contains "$doctor_output" "Host platform:"
+assert_contains "$doctor_output" "Managed toolchains: openssl-1.1.1w autoconf-2.69 bison-3.8.2"
 
 bash -lc "export PHP_IV_PATH='$REPO_ROOT'; export PHP_IV_ROOT='$PHP_IV_ROOT'; source '$REPO_ROOT/php-iv.bash'; declare -F php-iv >/dev/null; php-iv select 8.4 >/dev/null; [[ \"\$PHP_IV_ACTIVE_VERSION\" == \"8.4.19\" ]]"
 

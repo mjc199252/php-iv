@@ -1,0 +1,8 @@
+PHP_IV_TC_COMPONENT="bison-3.8.2"
+PHP_IV_TC_KIND="bison"
+PHP_IV_TC_NAME="bison"
+PHP_IV_TC_VERSION="3.8.2"
+PHP_IV_TC_ARCHIVE="bison-3.8.2.tar.xz"
+PHP_IV_TC_URL="https://ftp.gnu.org/gnu/bison/bison-3.8.2.tar.xz"
+PHP_IV_TC_SOURCE_DIR="bison-3.8.2"
+PHP_IV_TC_NOTES="Legacy parser generator toolchain for PHP 7.x."

@@ -2,7 +2,7 @@
 
 php_iv_doctor_required_tools() {
   local version_spec="${1:-}"
-  local tools=(tar make autoconf)
+  local tools=(tar make)
 
   if php_iv_command_exists cc; then
     :
@@ -75,6 +75,7 @@ php_iv_doctor() {
   local version_spec="${1:-}"
   local status=0
   local tool
+  local manifest_file
 
   printf 'Host platform: %s\n' "$PHP_IV_HOST_PLATFORM"
   printf 'Install root: %s\n' "$PHP_IV_ROOT"
@@ -85,6 +86,12 @@ php_iv_doctor() {
       printf 'Target version: %s (%s)\n' "$PHP_IV_VERSION" "$PHP_IV_SUPPORT_TIER"
       if [[ -n "${PHP_IV_NOTES:-}" ]]; then
         printf 'Notes: %s\n' "$PHP_IV_NOTES"
+      fi
+      if [[ -n "${PHP_IV_EXPERIMENTAL_PLATFORMS:-}" ]] && [[ " $PHP_IV_EXPERIMENTAL_PLATFORMS " == *" $PHP_IV_HOST_PLATFORM "* ]]; then
+        printf 'Experimental: yes on %s\n' "$PHP_IV_HOST_PLATFORM"
+      fi
+      if [[ ${#PHP_IV_TOOLCHAIN_COMPONENTS[@]} -gt 0 ]]; then
+        printf 'Managed toolchains: %s\n' "${PHP_IV_TOOLCHAIN_COMPONENTS[*]}"
       fi
     fi
   fi
