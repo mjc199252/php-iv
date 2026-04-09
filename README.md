@@ -280,7 +280,7 @@ php-iv select 8
 
 ## 操作说明
 
-### 安装一个现代 PHP 版本
+### 安装一个 PHP 版本
 
 典型流程如下：
 
@@ -301,7 +301,7 @@ php -v
 php --ini
 ```
 
-### 安装一个 legacy PHP 版本
+### 安装 legacy PHP 版本
 
 legacy 版本的流程基本一致，但首次安装时可能会额外准备隔离 toolchain，因此耗时通常更长。
 
@@ -378,12 +378,4 @@ php-iv info 7.1
 php-iv info 8.4
 ```
 
-## 开发与测试
 
-仓库内置测试脚本：
-
-```bash
-./tests/run.sh
-```
-
-CI 会在 `ubuntu-latest` 和 `macos-latest` 上执行语法检查、bootstrap 检查和核心命令 smoke test。
